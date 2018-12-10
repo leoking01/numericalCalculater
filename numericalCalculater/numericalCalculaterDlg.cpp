@@ -75,6 +75,7 @@ BEGIN_MESSAGE_MAP(CtransMedia2YuvMfcDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON9, &CtransMedia2YuvMfcDlg::OnBnClickedButton9_optical_flow_method)
 	ON_BN_CLICKED(IDC_BUTTON10, &CtransMedia2YuvMfcDlg::OnBnClickedButton10_video2__383x383x3)
 	ON_BN_CLICKED(IDC_BUTTON11, &CtransMedia2YuvMfcDlg::OnBnClickedButton11_get2Frequence)
+	ON_BN_CLICKED(IDC_BUTTON12, &CtransMedia2YuvMfcDlg::OnBnClickedButton12_opencv_player_toobar)
 END_MESSAGE_MAP()
 
 
@@ -1432,7 +1433,7 @@ void CtransMedia2YuvMfcDlg::OnBnClickedButton9_optical_flow_method()
 
 	//LucasKanadeTracker    lkt(600,  0  );
 
-	
+
 
 
 
@@ -1509,7 +1510,7 @@ void CtransMedia2YuvMfcDlg::OnBnClickedButton10_video2__383x383x3()
 	//return 0;
 
 	Size size = Size(capture.get(CV_CAP_PROP_FRAME_WIDTH), capture.get(CV_CAP_PROP_FRAME_HEIGHT));
-	size = Size(  383,383  );
+	size = Size(383, 383);
 	VideoWriter writer;
 	writer.open(nameFileOut, CV_FOURCC('M', 'J', 'P', 'G'), 10, size, true);
 
@@ -1518,7 +1519,7 @@ void CtransMedia2YuvMfcDlg::OnBnClickedButton10_video2__383x383x3()
 	while (capture.read(frame))
 	{
 		Mat  rsz;
-		resize(frame , rsz,  size  );
+		resize(frame, rsz, size);
 		writer.write(rsz);
 		imshow("output", frame);
 		waitKey(10);
@@ -1528,6 +1529,18 @@ void CtransMedia2YuvMfcDlg::OnBnClickedButton10_video2__383x383x3()
 }
 
 
+
+//对应int32大小的成员 的转换 范例
+int32_t swapInt32(int32_t value)
+{
+	return ((value & 0x000000FF) << 24) |
+		((value & 0x0000FF00) << 8) |
+		((value & 0x00FF0000) >> 8) |
+		((value & 0xFF000000) >> 24);
+}
+
+
+//    计算fpga的两个显示频率    
 void CtransMedia2YuvMfcDlg::OnBnClickedButton11_get2Frequence()
 {
 	// TODO: 在此添加控件通知处理程序代码
@@ -1546,10 +1559,24 @@ void CtransMedia2YuvMfcDlg::OnBnClickedButton11_get2Frequence()
 
 	char nameFrameConfigure[800];
 
+
+
 	for (int fre_show = 60; fre_show >= 30; fre_show -= 10)
 	{
-		for (int steps = 500; steps <= 2400; steps += 100)
+		if (fre_show != 30 && fre_show != 60)
 		{
+			continue;
+		}
+		if (fre_show != 60)
+		{
+			//  continue;
+		}
+		for (int steps = 500; steps <= 4800; steps += 20)
+		{
+			if (steps != 2660 && steps != 1320 && steps != 2800 && steps != 1100 && steps != 2720)
+			{
+				//continue;
+			}
 			fre_out_00 = fre_ori_00 * 1100 * 60 / steps / fre_show;
 			fre_out_01 = fre_ori_01 * 1100 * 60 / steps / fre_show;
 
@@ -1560,12 +1587,146 @@ void CtransMedia2YuvMfcDlg::OnBnClickedButton11_get2Frequence()
 			printf("\t%x\t", (int)fre_out_01);
 			cout << endl;
 
-			sprintf(nameFrameConfigure, "fr___%dHz_%dL_frameRateSetup.bin",
-				(int)fre_show, (int)(steps / 4.0)  );
+			sprintf(nameFrameConfigure, "frameSetBin/fr___%dHz__rnd%d__%dL__steps_%d_frameRateSetup.bin",
+				(int)fre_show, (int)fre_show * 900 / 60, (int)(steps / 4.0), (int)(steps));
+			fstream  fout(nameFrameConfigure, ios::out | ios::binary);
+
+			unsigned char x01 = 90;
+			fout.write((char*)&x01, sizeof(x01));
+			fout.write((char*)&x01, sizeof(x01));
+
+			unsigned char x02 = 91;
+			fout.write((char*)&x02, sizeof(x02));
+			fout.write((char*)&x02, sizeof(x02));
+
+			unsigned char x03 = 4;
+			fout.write((char*)&x03, sizeof(x03));
+
+
+			short  x04 = (steps / 4.0);
+			fout.write((char*)&x04, sizeof(x04));
+
+			short  x05 = (short)(0.5 + fre_out_00);
+			fout.write((char*)&x05, sizeof(x05));
+
+			short  x06 = (short)(0.5 + fre_out_01);
+			fout.write((char*)&x06, sizeof(x06));
+
+
+			unsigned char  x07 = 0;
+			fout.write((char*)&x07, sizeof(x07));
+			fout.write((char*)&x07, sizeof(x07));
+			fout.write((char*)&x07, sizeof(x07));
+			fout.write((char*)&x07, sizeof(x07));
+			fout.write((char*)&x07, sizeof(x07));
+
+
+			fout.close();
 		}
 	}
 
 
 
 	FreeConsole();
+}
+
+//  ----------------------------------------   opencv播放器-带进度条  ------------------------------------------------ //  
+
+Mat image;   //读入视频帧的Mat
+char* windowName = "Video Control-如果要结束就输入任意键并单击关闭图标"; //播放窗口名称
+char* trackBarName = "播放进度";    //trackbar控制条名称
+
+double totalFrame = 1.0;     //视频总帧数
+double currentFrame = 1.0;    //当前播放帧
+int trackbarValue = 1;    //trackbar控制量
+int trackbarMax = 255;   //trackbar控制条最大值
+double frameRate = 1.0;  //视频帧率
+VideoCapture video;    //声明视频对象
+double controlRate = 0.1;
+
+
+//int createTrackbar(const string& trackbarname, const string& winname,
+//	int* value, int count,
+//	TrackbarCallback onChange = 0,
+//	void* userdata = 0);
+
+//void TrackBarFunc(int, void(*));
+void TrackBarFunc(int, void(*))
+{
+	controlRate = (double)trackbarValue / trackbarMax*totalFrame; //trackbar控制条对视频播放进度的控制
+	video.set(CV_CAP_PROP_POS_FRAMES, controlRate);	 //设置当前播放帧
+}
+void CtransMedia2YuvMfcDlg::OnBnClickedButton12_opencv_player_toobar()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	// TODO: 在此添加控件通知处理程序代码
+
+	CString m_strPicPath;
+	//IplImage* TheImage;
+	CFileDialog dlg(true, _T("*.mp4"), NULL, OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST | OFN_HIDEREADONLY,
+		_T("video(*.mp4,*.avi,*.rmvb,*.rm)|*.mp4;*.avi;*.rmvb;*.rmvb;*.mpg;*.mov;*.dat;*.rm;*.bin;*.mkv|avi(*.avi)|*.avi;rmvb(*.rmvb)|*.rmvb|rm(*.rm)|*.rm|All files(*.*)|*.*"), NULL);//弹出选择图片对话框
+	dlg.m_ofn.lpstrTitle = _T("open video");
+	if (dlg.DoModal() != IDOK)
+		return;
+	m_strPicPath = dlg.GetPathName();
+	//append_string_on_edit_controler(IDC_EDIT9, CString("文件名称显示(检查)：m_strPicPath = ") + m_strPicPath);
+	//append_string_on_edit_controler(IDC_EDIT9, CString("打开视频：") + m_strPicPath);
+
+	if (m_strPicPath.IsEmpty())
+	{
+		return;
+	}
+
+	//从这里开始进行转化，这是一个宏定义
+	USES_CONVERSION;
+	//进行转换
+	char* keyChar = T2A(m_strPicPath.GetBuffer(0));
+	m_strPicPath.ReleaseBuffer();
+	//转化结束，进行对数据的操作
+	//CString value(…………);
+	//对数据进行显示
+	//((CListBox*)GetDlgItem(IDC_LIST1))->AddString(value);
+	//append_string_on_edit_controler(IDC_EDIT9, CString("文件名称显示(检查)：CString(str ) = ") + CString(keyChar));
+
+	string  nameFile = string(keyChar); // "d:/video/Vivo.mp4";
+
+
+
+
+
+	string nameVideo = nameFile;//  "D:\\video/2016.out.mp4";
+	//打开视频文件
+	video.open(nameVideo);
+	if (!video.isOpened())
+	{
+		std::cout << "Failed to open video" << std::endl;
+	}
+	totalFrame = video.get(CV_CAP_PROP_FRAME_COUNT);  //获取总帧数
+	frameRate = video.get(CV_CAP_PROP_FPS);   //获取帧率
+	double pauseTime = 1000 / frameRate; // 由帧率计算两幅图像间隔时间
+	namedWindow(windowName);
+	//在图像窗口上创建控制条
+	createTrackbar(trackBarName, windowName, &trackbarValue, trackbarMax, TrackBarFunc);
+	TrackBarFunc(0, 0);
+	while (true)
+	{
+		video.read(image);
+		resize(image, image, Size(500, 400)); //调整图像大小，视频在我的显示器上显示不全
+		imshow(windowName, image);  //显示图像
+		char key = waitKey(pauseTime);   //图像间隔
+		if (key > 0)
+			break;
+		controlRate++;
+		if (controlRate > totalFrame)  //播放完成退出
+		{
+			break;
+		}
+
+	}
+	video.release();  //释放视频，C++中不写也无碍，可以自动释放
+	waitKey();
+
+
+
+
 }

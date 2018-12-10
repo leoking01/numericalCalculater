@@ -43,4 +43,5 @@ public:
 	afx_msg void OnBnClickedButton9_optical_flow_method();
 	afx_msg void OnBnClickedButton10_video2__383x383x3();
 	afx_msg void OnBnClickedButton11_get2Frequence();
+	afx_msg void OnBnClickedButton12_opencv_player_toobar();
 };
