@@ -78,16 +78,16 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>D:\win10\env\ffmpeg-4.0-win64-dev\include;D:\win10\env\opencv24136\opencv\build\include;D:\win10\env\Eigen3\include\eigen3;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\win10\env\ffmpeg-4.0-win64-dev\lib;D:\win10\env\opencv24136\opencv\build\x64\vc14\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\win10\env\ffmpeg-4.0-win64-dev\include;D:\win10\env\opencv24136\opencv\build\include;D:\win10\env\Eigen3\include\eigen3;D:\win10\env\dlib\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\win10\env\ffmpeg-4.0-win64-dev\lib;D:\win10\env\opencv24136\opencv\build\x64\vc14\lib;D:\win10\env\dlib\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>D:\win10\env\ffmpeg-4.0-win64-dev\include;D:\win10\env\opencv24136\opencv\build\include;D:\win10\env\Eigen3\include\eigen3;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\win10\env\opencv24136\opencv\build\x64\vc14\lib;D:\win10\env\ffmpeg-4.0-win64-dev\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\win10\env\ffmpeg-4.0-win64-dev\include;D:\win10\env\opencv24136\opencv\build\include;D:\win10\env\Eigen3\include\eigen3;D:\win10\env\dlib\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\win10\env\opencv24136\opencv\build\x64\vc14\lib;D:\win10\env\ffmpeg-4.0-win64-dev\lib;D:\win10\env\dlib\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -119,7 +119,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalDependencies>avcodec.lib;avdevice.lib;avfilter.lib;avformat.lib;avutil.lib;postproc.lib;swscale.lib;opencv_calib3d2413d.lib;opencv_core2413d.lib;opencv_imgproc2413d.lib;opencv_highgui2413d.lib;opencv_contrib2413d.lib;opencv_features2d2413d.lib;opencv_flann2413d.lib;opencv_gpu2413d.lib;opencv_legacy2413d.lib;opencv_ml2413d.lib;opencv_nonfree2413d.lib;opencv_objdetect2413d.lib;opencv_ocl2413d.lib;opencv_photo2413d.lib;opencv_stitching2413d.lib;opencv_superres2413d.lib;opencv_ts2413d.lib;opencv_video2413d.lib;opencv_videostab2413d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>avcodec.lib;avdevice.lib;avfilter.lib;avformat.lib;avutil.lib;postproc.lib;swscale.lib;opencv_calib3d2413d.lib;opencv_core2413d.lib;opencv_imgproc2413d.lib;opencv_highgui2413d.lib;opencv_contrib2413d.lib;opencv_features2d2413d.lib;opencv_flann2413d.lib;opencv_gpu2413d.lib;opencv_legacy2413d.lib;opencv_ml2413d.lib;opencv_nonfree2413d.lib;opencv_objdetect2413d.lib;opencv_ocl2413d.lib;opencv_photo2413d.lib;opencv_stitching2413d.lib;opencv_superres2413d.lib;opencv_ts2413d.lib;opencv_video2413d.lib;opencv_videostab2413d.lib;dlibd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -170,7 +170,7 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>opencv_core2413.lib;opencv_imgproc2413.lib;opencv_highgui2413.lib;avcodec.lib;avdevice.lib;avfilter.lib;avformat.lib;avutil.lib;postproc.lib;swscale.lib;opencv_calib3d2413.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opencv_core2413.lib;opencv_imgproc2413.lib;opencv_highgui2413.lib;avcodec.lib;avdevice.lib;avfilter.lib;avformat.lib;avutil.lib;postproc.lib;swscale.lib;opencv_calib3d2413.lib;dlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>

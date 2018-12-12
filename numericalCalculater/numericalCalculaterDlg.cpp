@@ -1,5 +1,5 @@
 ﻿
-// transMedia2YuvMfcDlg.cpp : 实现文件
+// numericalCalculaterDlg.cpp : 实现文件
 //
 
 #include "stdafx.h"
@@ -45,43 +45,46 @@ BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
 END_MESSAGE_MAP()
 
 
-// CtransMedia2YuvMfcDlg 对话框
+// CnumericalCalculaterDlg 对话框
 
 
 
-CtransMedia2YuvMfcDlg::CtransMedia2YuvMfcDlg(CWnd* pParent /*=NULL*/)
-	: CDialogEx(IDD_TRANSMEDIA2YUVMFC_DIALOG, pParent)
+CnumericalCalculaterDlg::CnumericalCalculaterDlg(CWnd* pParent /*=NULL*/)
+	: CDialogEx(IDD_numericalCalculater_DIALOG, pParent)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
 
-void CtransMedia2YuvMfcDlg::DoDataExchange(CDataExchange* pDX)
+void CnumericalCalculaterDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 }
 
-BEGIN_MESSAGE_MAP(CtransMedia2YuvMfcDlg, CDialogEx)
+BEGIN_MESSAGE_MAP(CnumericalCalculaterDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
-	ON_BN_CLICKED(IDC_BUTTON1, &CtransMedia2YuvMfcDlg::OnBnClickedButton1_trans2YUV)
-	ON_BN_CLICKED(IDC_BUTTON2, &CtransMedia2YuvMfcDlg::OnBnClickedButton2_test_binary_io_align_problm)
-	ON_BN_CLICKED(IDC_BUTTON3, &CtransMedia2YuvMfcDlg::OnBnClickedButton3_study_fundamentalMatrix)
-	ON_BN_CLICKED(IDC_BUTTON4, &CtransMedia2YuvMfcDlg::OnBnClickedButton4_optimization)
-	ON_BN_CLICKED(IDC_BUTTON5, &CtransMedia2YuvMfcDlg::OnBnClickedButton5_numerical_analysis)
-	ON_BN_CLICKED(IDC_BUTTON6, &CtransMedia2YuvMfcDlg::OnBnClickedButton6_numerical_opt_gaus_nuton)
-	ON_BN_CLICKED(IDC_BUTTON7, &CtransMedia2YuvMfcDlg::OnBnClickedButton7_mixmizeBinaryProduct)
-	ON_BN_CLICKED(IDC_BUTTON8, &CtransMedia2YuvMfcDlg::OnBnClickedButton8_function_fit_02)
-	ON_BN_CLICKED(IDC_BUTTON9, &CtransMedia2YuvMfcDlg::OnBnClickedButton9_optical_flow_method)
-	ON_BN_CLICKED(IDC_BUTTON10, &CtransMedia2YuvMfcDlg::OnBnClickedButton10_video2__383x383x3)
-	ON_BN_CLICKED(IDC_BUTTON11, &CtransMedia2YuvMfcDlg::OnBnClickedButton11_get2Frequence)
-	ON_BN_CLICKED(IDC_BUTTON12, &CtransMedia2YuvMfcDlg::OnBnClickedButton12_opencv_player_toobar)
+	ON_BN_CLICKED(IDC_BUTTON1, &CnumericalCalculaterDlg::OnBnClickedButton1_trans2YUV)
+	ON_BN_CLICKED(IDC_BUTTON2, &CnumericalCalculaterDlg::OnBnClickedButton2_test_binary_io_align_problm)
+	ON_BN_CLICKED(IDC_BUTTON3, &CnumericalCalculaterDlg::OnBnClickedButton3_study_fundamentalMatrix)
+	ON_BN_CLICKED(IDC_BUTTON4, &CnumericalCalculaterDlg::OnBnClickedButton4_optimization)
+	ON_BN_CLICKED(IDC_BUTTON5, &CnumericalCalculaterDlg::OnBnClickedButton5_numerical_analysis)
+	ON_BN_CLICKED(IDC_BUTTON6, &CnumericalCalculaterDlg::OnBnClickedButton6_numerical_opt_gaus_nuton)
+	ON_BN_CLICKED(IDC_BUTTON7, &CnumericalCalculaterDlg::OnBnClickedButton7_mixmizeBinaryProduct)
+	ON_BN_CLICKED(IDC_BUTTON8, &CnumericalCalculaterDlg::OnBnClickedButton8_function_fit_02)
+	ON_BN_CLICKED(IDC_BUTTON9, &CnumericalCalculaterDlg::OnBnClickedButton9_optical_flow_method)
+	ON_BN_CLICKED(IDC_BUTTON10, &CnumericalCalculaterDlg::OnBnClickedButton10_video2__383x383x3)
+	ON_BN_CLICKED(IDC_BUTTON11, &CnumericalCalculaterDlg::OnBnClickedButton11_get2Frequence)
+	ON_BN_CLICKED(IDC_BUTTON12, &CnumericalCalculaterDlg::OnBnClickedButton12_opencv_player_toobar)
+	ON_BN_CLICKED(IDC_BUTTON13, &CnumericalCalculaterDlg::OnBnClickedButton13_oneChannels2Three)
+	ON_BN_CLICKED(IDC_BUTTON14, &CnumericalCalculaterDlg::OnBnClickedButton14_dlibBayes)
+	ON_BN_CLICKED(IDC_BUTTON15, &CnumericalCalculaterDlg::OnBnClickedButton15_dlibSvm)
 END_MESSAGE_MAP()
 
 
-// CtransMedia2YuvMfcDlg 消息处理程序
+// CnumericalCalculaterDlg 消息处理程序
 
-BOOL CtransMedia2YuvMfcDlg::OnInitDialog()
+BOOL CnumericalCalculaterDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
@@ -115,7 +118,7 @@ BOOL CtransMedia2YuvMfcDlg::OnInitDialog()
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
 
-void CtransMedia2YuvMfcDlg::OnSysCommand(UINT nID, LPARAM lParam)
+void CnumericalCalculaterDlg::OnSysCommand(UINT nID, LPARAM lParam)
 {
 	if ((nID & 0xFFF0) == IDM_ABOUTBOX)
 	{
@@ -132,7 +135,7 @@ void CtransMedia2YuvMfcDlg::OnSysCommand(UINT nID, LPARAM lParam)
 //  来绘制该图标。  对于使用文档/视图模型的 MFC 应用程序，
 //  这将由框架自动完成。
 
-void CtransMedia2YuvMfcDlg::OnPaint()
+void CnumericalCalculaterDlg::OnPaint()
 {
 	if (IsIconic())
 	{
@@ -159,14 +162,14 @@ void CtransMedia2YuvMfcDlg::OnPaint()
 
 //当用户拖动最小化窗口时系统调用此函数取得光标
 //显示。
-HCURSOR CtransMedia2YuvMfcDlg::OnQueryDragIcon()
+HCURSOR CnumericalCalculaterDlg::OnQueryDragIcon()
 {
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
 
 
-void CtransMedia2YuvMfcDlg::OnBnClickedButton1_trans2YUV()
+void CnumericalCalculaterDlg::OnBnClickedButton1_trans2YUV()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	// 打开图片文件
@@ -279,7 +282,7 @@ int main_write_binaryfile_study()
 
 
 
-void CtransMedia2YuvMfcDlg::OnBnClickedButton2_test_binary_io_align_problm()
+void CnumericalCalculaterDlg::OnBnClickedButton2_test_binary_io_align_problm()
 {
 	AllocConsole();
 	freopen("CONOUT$", "w", stdout);
@@ -399,7 +402,7 @@ int main_study_fundamentalMatrix()
 }
 
 
-void CtransMedia2YuvMfcDlg::OnBnClickedButton3_study_fundamentalMatrix()
+void CnumericalCalculaterDlg::OnBnClickedButton3_study_fundamentalMatrix()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	AllocConsole();
@@ -464,7 +467,7 @@ void DrawCuboid(CDC *pDC)
 
 
 
-void CtransMedia2YuvMfcDlg::OnBnClickedButton4_optimization()
+void CnumericalCalculaterDlg::OnBnClickedButton4_optimization()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	// TODO: 在此添加控件通知处理程序代码
@@ -576,7 +579,7 @@ int main__eigen_study_calc_001()
 
 
 
-void CtransMedia2YuvMfcDlg::OnBnClickedButton5_numerical_analysis()
+void CnumericalCalculaterDlg::OnBnClickedButton5_numerical_analysis()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	// TODO: 在此添加控件通知处理程序代码
@@ -766,7 +769,7 @@ void GaussNewton(double(*Func)(const Mat &input, const Mat params),
 
 
 
-void CtransMedia2YuvMfcDlg::OnBnClickedButton6_numerical_opt_gaus_nuton()
+void CnumericalCalculaterDlg::OnBnClickedButton6_numerical_opt_gaus_nuton()
 {
 	// TODO: 在此添加控件通知处理程序代码
 
@@ -779,7 +782,7 @@ void CtransMedia2YuvMfcDlg::OnBnClickedButton6_numerical_opt_gaus_nuton()
 }
 
 
-void CtransMedia2YuvMfcDlg::OnBnClickedButton7_mixmizeBinaryProduct()
+void CnumericalCalculaterDlg::OnBnClickedButton7_mixmizeBinaryProduct()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	AllocConsole();
@@ -842,7 +845,7 @@ int main_function_fit_02()
 	Mat outputs(total_data, 1, CV_64F);
 
 	for (int i = 0; i < total_data; i++) {
-		double x = -10.0 + 20.0* rand() / (1.0 + RAND_MAX); // random between [-10 and 10]  
+		double x = -10.0 + 20.0*  std::rand() / (1.0 + RAND_MAX); // random between [-10 and 10]  
 		double y = A*sin(B*x) + C*cos(D*x);
 
 		// Add some noise  
@@ -1112,7 +1115,7 @@ int main_rand_gradient()
 	return 0;
 }
 
-void CtransMedia2YuvMfcDlg::OnBnClickedButton8_function_fit_02()
+void CnumericalCalculaterDlg::OnBnClickedButton8_function_fit_02()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	AllocConsole();
@@ -1422,24 +1425,14 @@ int main_bmp_read_write(void)
 
 
 
-void CtransMedia2YuvMfcDlg::OnBnClickedButton9_optical_flow_method()
+void CnumericalCalculaterDlg::OnBnClickedButton9_optical_flow_method()
 {
-	// TODO: 在此添加控件通知处理程序代码
 	// TODO: 在此添加控件通知处理程序代码
 	AllocConsole();
 	freopen("CONOUT$", "w", stdout);
 
-
-
 	//LucasKanadeTracker    lkt(600,  0  );
-
-
-
-
-
 	main_bmp_read_write();
-
-
 	if (0)
 	{
 
@@ -1459,7 +1452,7 @@ void CtransMedia2YuvMfcDlg::OnBnClickedButton9_optical_flow_method()
 }
 
 
-void CtransMedia2YuvMfcDlg::OnBnClickedButton10_video2__383x383x3()
+void CnumericalCalculaterDlg::OnBnClickedButton10_video2__383x383x3()
 {
 	// TODO: 在此添加控件通知处理程序代码
 
@@ -1541,7 +1534,7 @@ int32_t swapInt32(int32_t value)
 
 
 //    计算fpga的两个显示频率    
-void CtransMedia2YuvMfcDlg::OnBnClickedButton11_get2Frequence()
+void CnumericalCalculaterDlg::OnBnClickedButton11_get2Frequence()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	AllocConsole();
@@ -1656,7 +1649,7 @@ void TrackBarFunc(int, void(*))
 	controlRate = (double)trackbarValue / trackbarMax*totalFrame; //trackbar控制条对视频播放进度的控制
 	video.set(CV_CAP_PROP_POS_FRAMES, controlRate);	 //设置当前播放帧
 }
-void CtransMedia2YuvMfcDlg::OnBnClickedButton12_opencv_player_toobar()
+void CnumericalCalculaterDlg::OnBnClickedButton12_opencv_player_toobar()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	// TODO: 在此添加控件通知处理程序代码
@@ -1689,9 +1682,6 @@ void CtransMedia2YuvMfcDlg::OnBnClickedButton12_opencv_player_toobar()
 	//append_string_on_edit_controler(IDC_EDIT9, CString("文件名称显示(检查)：CString(str ) = ") + CString(keyChar));
 
 	string  nameFile = string(keyChar); // "d:/video/Vivo.mp4";
-
-
-
 
 
 	string nameVideo = nameFile;//  "D:\\video/2016.out.mp4";
@@ -1729,4 +1719,692 @@ void CtransMedia2YuvMfcDlg::OnBnClickedButton12_opencv_player_toobar()
 
 
 
+}
+
+
+void CnumericalCalculaterDlg::OnBnClickedButton13_oneChannels2Three()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	string  nameOfImage = "D:\\tof_img/";
+	string  nameOfImageOut = "D:\\tof_img3/";
+	for (int i = 1; i < 125; i++)
+	{
+		Mat  src = imread( nameOfImage+to_string(i)+string(".png"),   1 );
+		imwrite( (nameOfImageOut + to_string(i) + string(".png")).c_str() ,     src  );
+		//Mat  out3 = imread(, 1);
+
+	}
+
+}
+
+
+
+using namespace dlib;
+using namespace std;
+
+// The contents of this file are in the public domain. See LICENSE_FOR_EXAMPLE_PROGRAMS.txt
+/*
+This is an example illustrating the use of the Bayesian Network
+inference utilities found in the dlib C++ library.
+
+
+In this example all the nodes in the Bayesian network are
+boolean variables.  That is, they take on either the value
+0 or the value 1.
+
+The network contains 4 nodes and looks as follows:
+
+B     C
+\\   //
+\/ \/
+A
+||
+\/
+D
+
+
+The probabilities of each node are summarized below.  (The probability
+of each node being 0 is not listed since it is just P(X=0) = 1-p(X=1) )
+
+p(B=1) = 0.01
+
+p(C=1) = 0.001
+
+p(A=1 | B=0, C=0) = 0.01
+p(A=1 | B=0, C=1) = 0.5
+p(A=1 | B=1, C=0) = 0.9
+p(A=1 | B=1, C=1) = 0.99
+
+p(D=1 | A=0) = 0.2
+p(D=1 | A=1) = 0.5
+
+*/
+
+
+
+
+// ----------------------------------------------------------------------------------------
+
+int main_example_dlib_bayes()
+{
+	try
+	{
+		// There are many useful convenience functions in this namespace.  They all
+		// perform simple access or modify operations on the nodes of a bayesian network. 
+		// You don't have to use them but they are convenient and they also will check for
+		// various errors in your bayesian network when your application is built with
+		// the DEBUG or ENABLE_ASSERTS preprocessor definitions defined.  So their use
+		// is recommended.  In fact, most of the global functions used in this example 
+		// program are from this namespace.
+		using namespace bayes_node_utils;
+
+		// This statement declares a bayesian network called bn.  Note that a bayesian network
+		// in the dlib world is just a directed_graph object that contains a special kind 
+		// of node called a bayes_node.
+		directed_graph<bayes_node>::kernel_1a_c bn;
+
+		// Use an enum to make some more readable names for our nodes.
+		enum nodes
+		{
+			A = 0,
+			B = 1,
+			C = 2,
+			D = 3
+		};
+
+		// The next few blocks of code setup our bayesian network.
+
+		// The first thing we do is tell the bn object how many nodes it has
+		// and also add the three edges.  Again, we are using the network
+		// shown in ASCII art at the top of this file.
+		bn.set_number_of_nodes(4);
+		bn.add_edge(A, D);
+		bn.add_edge(B, A);
+		bn.add_edge(C, A);
+
+
+		// Now we inform all the nodes in the network that they are binary
+		// nodes.  That is, they only have two possible values.  
+		set_node_num_values(bn, A, 2);
+		set_node_num_values(bn, B, 2);
+		set_node_num_values(bn, C, 2);
+		set_node_num_values(bn, D, 2);
+
+		assignment parent_state;
+		// Now we will enter all the conditional probability information for each node.
+		// Each node's conditional probability is dependent on the state of its parents.  
+		// To specify this state we need to use the assignment object.  This assignment 
+		// object allows us to specify the state of each nodes parents. 
+
+
+		// Here we specify that p(B=1) = 0.01
+		// parent_state is empty in this case since B is a root node. 
+		set_node_probability(bn, B, 1, parent_state, 0.01);
+		// Here we specify that p(B=0) = 1-0.01
+		set_node_probability(bn, B, 0, parent_state, 1 - 0.01);
+
+
+		// Here we specify that p(C=1) = 0.001
+		// parent_state is empty in this case since B is a root node. 
+		set_node_probability(bn, C, 1, parent_state, 0.001);
+		// Here we specify that p(C=0) = 1-0.001
+		set_node_probability(bn, C, 0, parent_state, 1 - 0.001);
+
+
+		// This is our first node that has parents. So we set the parent_state
+		// object to reflect that A has both B and C as parents.
+		parent_state.add(B, 1);
+		parent_state.add(C, 1);
+		// Here we specify that p(A=1 | B=1, C=1) = 0.99 
+		set_node_probability(bn, A, 1, parent_state, 0.99);
+		// Here we specify that p(A=0 | B=1, C=1) = 1-0.99 
+		set_node_probability(bn, A, 0, parent_state, 1 - 0.99);
+
+		// Here we use the [] notation because B and C have already
+		// been added into parent state.  
+		parent_state[B] = 1;
+		parent_state[C] = 0;
+		// Here we specify that p(A=1 | B=1, C=0) = 0.9 
+		set_node_probability(bn, A, 1, parent_state, 0.9);
+		set_node_probability(bn, A, 0, parent_state, 1 - 0.9);
+
+		parent_state[B] = 0;
+		parent_state[C] = 1;
+		// Here we specify that p(A=1 | B=0, C=1) = 0.5 
+		set_node_probability(bn, A, 1, parent_state, 0.5);
+		set_node_probability(bn, A, 0, parent_state, 1 - 0.5);
+
+		parent_state[B] = 0;
+		parent_state[C] = 0;
+		// Here we specify that p(A=1 | B=0, C=0) = 0.01 
+		set_node_probability(bn, A, 1, parent_state, 0.01);
+		set_node_probability(bn, A, 0, parent_state, 1 - 0.01);
+
+
+		// Here we set probabilities for node D.
+		// First we clear out parent state so that it doesn't have any of
+		// the assignments for the B and C nodes used above.
+		parent_state.clear();
+		parent_state.add(A, 1);
+		// Here we specify that p(D=1 | A=1) = 0.5 
+		set_node_probability(bn, D, 1, parent_state, 0.5);
+		set_node_probability(bn, D, 0, parent_state, 1 - 0.5);
+
+		parent_state[A] = 0;
+		// Here we specify that p(D=1 | A=0) = 0.2 
+		set_node_probability(bn, D, 1, parent_state, 0.2);
+		set_node_probability(bn, D, 0, parent_state, 1 - 0.2);
+
+
+
+		// We have now finished setting up our bayesian network.  So let's compute some 
+		// probability values.  The first thing we will do is compute the prior probability
+		// of each node in the network.  To do this we will use the join tree algorithm which
+		// is an algorithm for performing exact inference in a bayesian network.   
+
+		// First we need to create an undirected graph which contains set objects at each node and
+		// edge.  This long declaration does the trick.
+		typedef dlib::set<unsigned long>::compare_1b_c set_type;
+		typedef graph<set_type, set_type>::kernel_1a_c join_tree_type;
+		join_tree_type join_tree;
+
+		// Now we need to populate the join_tree with data from our bayesian network.  The next  
+		// function calls do this.  Explaining exactly what they do is outside the scope of this
+		// example.  Just think of them as filling join_tree with information that is useful 
+		// later on for dealing with our bayesian network.  
+		create_moral_graph(bn, join_tree);
+		create_join_tree(join_tree, join_tree);
+
+		// Now that we have a proper join_tree we can use it to obtain a solution to our
+		// bayesian network.  Doing this is as simple as declaring an instance of
+		// the bayesian_network_join_tree object as follows:
+		bayesian_network_join_tree solution(bn, join_tree);
+
+
+		// now print out the probabilities for each node
+		cout << "Using the join tree algorithm:\n";
+		cout << "p(A=1) = " << solution.probability(A)(1) << endl;
+		cout << "p(A=0) = " << solution.probability(A)(0) << endl;
+		cout << "p(B=1) = " << solution.probability(B)(1) << endl;
+		cout << "p(B=0) = " << solution.probability(B)(0) << endl;
+		cout << "p(C=1) = " << solution.probability(C)(1) << endl;
+		cout << "p(C=0) = " << solution.probability(C)(0) << endl;
+		cout << "p(D=1) = " << solution.probability(D)(1) << endl;
+		cout << "p(D=0) = " << solution.probability(D)(0) << endl;
+		cout << "\n\n\n";
+
+
+		// Now to make things more interesting let's say that we have discovered that the C 
+		// node really has a value of 1.  That is to say, we now have evidence that 
+		// C is 1.  We can represent this in the network using the following two function
+		// calls.
+		set_node_value(bn, C, 1);
+		set_node_as_evidence(bn, C);
+
+		// Now we want to compute the probabilities of all the nodes in the network again
+		// given that we now know that C is 1.  We can do this as follows:
+		bayesian_network_join_tree solution_with_evidence(bn, join_tree);
+
+		// now print out the probabilities for each node
+		cout << "Using the join tree algorithm:\n";
+		cout << "p(A=1 | C=1) = " << solution_with_evidence.probability(A)(1) << endl;
+		cout << "p(A=0 | C=1) = " << solution_with_evidence.probability(A)(0) << endl;
+		cout << "p(B=1 | C=1) = " << solution_with_evidence.probability(B)(1) << endl;
+		cout << "p(B=0 | C=1) = " << solution_with_evidence.probability(B)(0) << endl;
+		cout << "p(C=1 | C=1) = " << solution_with_evidence.probability(C)(1) << endl;
+		cout << "p(C=0 | C=1) = " << solution_with_evidence.probability(C)(0) << endl;
+		cout << "p(D=1 | C=1) = " << solution_with_evidence.probability(D)(1) << endl;
+		cout << "p(D=0 | C=1) = " << solution_with_evidence.probability(D)(0) << endl;
+		cout << "\n\n\n";
+
+		// Note that when we made our solution_with_evidence object we reused our join_tree object.
+		// This saves us the time it takes to calculate the join_tree object from scratch.  But
+		// it is important to note that we can only reuse the join_tree object if we haven't changed
+		// the structure of our bayesian network.  That is, if we have added or removed nodes or 
+		// edges from our bayesian network then we must recompute our join_tree.  But in this example
+		// all we did was change the value of a bayes_node object (we made node C be evidence)
+		// so we are ok.
+
+
+
+
+
+		// Next this example will show you how to use the bayesian_network_gibbs_sampler object
+		// to perform approximate inference in a bayesian network.  This is an algorithm 
+		// that doesn't give you an exact solution but it may be necessary to use in some 
+		// instances.  For example, the join tree algorithm used above, while fast in many
+		// instances, has exponential runtime in some cases.  Moreover, inference in bayesian
+		// networks is NP-Hard for general networks so sometimes the best you can do is
+		// find an approximation.
+		// However, it should be noted that the gibbs sampler does not compute the correct
+		// probabilities if the network contains a deterministic node.  That is, if any
+		// of the conditional probability tables in the bayesian network have a probability
+		// of 1.0 for something the gibbs sampler should not be used.
+
+
+		// This Gibbs sampler algorithm works by randomly sampling possibles values of the
+		// network.  So to use it we should set the network to some initial state.  
+
+		set_node_value(bn, A, 0);
+		set_node_value(bn, B, 0);
+		set_node_value(bn, D, 0);
+
+		// We will leave the C node with a value of 1 and keep it as an evidence node.  
+
+
+		// First create an instance of the gibbs sampler object
+		bayesian_network_gibbs_sampler sampler;
+
+
+		// To use this algorithm all we do is go into a loop for a certain number of times
+		// and each time through we sample the bayesian network.  Then we count how 
+		// many times a node has a certain state.  Then the probability of that node
+		// having that state is just its count/total times through the loop. 
+
+		// The following code illustrates the general procedure.
+		unsigned long A_count = 0;
+		unsigned long B_count = 0;
+		unsigned long C_count = 0;
+		unsigned long D_count = 0;
+
+		// The more times you let the loop run the more accurate the result will be.  Here we loop
+		// 2000 times.
+		const long rounds = 2000;
+		for (long i = 0; i < rounds; ++i)
+		{
+			sampler.sample_graph(bn);
+
+			if (node_value(bn, A) == 1)
+				++A_count;
+			if (node_value(bn, B) == 1)
+				++B_count;
+			if (node_value(bn, C) == 1)
+				++C_count;
+			if (node_value(bn, D) == 1)
+				++D_count;
+		}
+
+		cout << "Using the approximate Gibbs Sampler algorithm:\n";
+		cout << "p(A=1 | C=1) = " << (double)A_count / (double)rounds << endl;
+		cout << "p(B=1 | C=1) = " << (double)B_count / (double)rounds << endl;
+		cout << "p(C=1 | C=1) = " << (double)C_count / (double)rounds << endl;
+		cout << "p(D=1 | C=1) = " << (double)D_count / (double)rounds << endl;
+	}
+	catch (std::exception& e)
+	{
+		cout << "exception thrown: " << endl;
+		cout << e.what() << endl;
+		cout << "hit enter to terminate" << endl;
+		cin.get();
+	}
+
+	return  0;
+}
+
+
+
+
+
+
+void CnumericalCalculaterDlg::OnBnClickedButton14_dlibBayes()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	AllocConsole();
+	freopen("CONOUT$", "w", stdout);
+
+	main_example_dlib_bayes();
+	FreeConsole();
+}
+
+
+
+
+// The contents of this file are in the public domain. See LICENSE_FOR_EXAMPLE_PROGRAMS.txt
+/*
+This is an example illustrating the use of the support vector machine
+utilities from the dlib C++ Library.
+This example creates a simple set of data to train on and then shows
+you how to use the cross validation and svm training functions
+to find a good decision function that can classify examples in our
+data set.
+The data used in this example will be 2 dimensional data and will
+come from a distribution where points with a distance less than 10
+from the origin are labeled +1 and all other points are labeled
+as -1.
+*/
+
+
+#include <iostream>
+#include <dlib/svm.h>
+#include<opencv2/opencv.hpp>
+
+using namespace std;
+using namespace dlib;
+using namespace cv;
+
+int main_dlibSvm()
+{
+
+	// The svm functions use column vectors to contain a lot of the data on which they
+	// operate. So the first thing we do here is declare a convenient typedef.  
+
+	// This typedef declares a matrix with 2 rows and 1 column.  It will be the object that
+	// contains each of our 2 dimensional samples.   (Note that if you wanted more than 2
+	// features in this vector you can simply change the 2 to something else.  Or if you
+	// don't know how many features you want until runtime then you can put a 0 here and
+	// use the matrix.set_size() member function)
+	typedef matrix<double, 2, 1> sample_type;
+
+	// This is a typedef for the type of kernel we are going to use in this example.  In
+	// this case I have selected the radial basis kernel that can operate on our 2D
+	// sample_type objects
+	typedef radial_basis_kernel<sample_type> kernel_type;
+
+
+	// Now we make objects to contain our samples and their respective labels.
+	std::vector<sample_type> samples;
+	std::vector<double> labels;
+
+	int 宽 = 500, 高 = 500;
+	cv::Mat 演示图片 = cv::Mat::zeros(高, 宽, CV_8UC3);
+
+	for (int r = -20; r <= 20; ++r)
+	{
+		for (int c = -20; c <= 20; ++c)
+		{
+			// if this point is less than 10 from the origin
+			if (sqrt((double)r*r + c*c) <= 10)
+			{
+				cv::line(演示图片, Point(c * 10 + 250 - 2, r * 10 + 250 - 2), Point(c * 10 + 250 + 2, r * 10 + 250 + 2), Scalar(0, 0, 255));
+				cv::line(演示图片, Point(c * 10 + 250 - 2, r * 10 + 250 + 2), Point(c * 10 + 250 + 2, r * 10 + 250 - 2), Scalar(0, 0, 255));
+			}
+			else
+				cv::circle(演示图片, Point(c * 10 + 250, r * 10 + 250), 1, Scalar(100));
+
+		}
+	}
+
+	imshow("训练样本", 演示图片);
+	waitKey(1);
+
+	// Now let's put some data into our samples and labels objects.  We do this by looping
+	// over a bunch of points and labeling them according to their distance from the
+	// origin.
+	for (int r = -20; r <= 20; ++r)
+	{
+		for (int c = -20; c <= 20; ++c)
+		{
+			sample_type samp;
+			samp(0) = r;
+			samp(1) = c;
+			samples.push_back(samp);
+
+			// if this point is less than 10 from the origin
+			if (sqrt((double)r*r + c*c) <= 10)
+				labels.push_back(+1);
+			else
+				labels.push_back(-1);
+
+		}
+	}
+
+
+	// Here we normalize all the samples by subtracting their mean and dividing by their
+	// standard deviation.  This is generally a good idea since it often heads off
+	// numerical stability problems and also prevents one large feature from smothering
+	// others.  Doing this doesn't matter much in this example so I'm just doing this here
+	// so you can see an easy way to accomplish this with the library.  
+	vector_normalizer<sample_type> normalizer;
+	// let the normalizer learn the mean and standard deviation of the samples
+	normalizer.train(samples);
+	// now normalize each sample
+	for (unsigned long i = 0; i < samples.size(); ++i)
+		samples[i] = normalizer(samples[i]);
+
+
+	// Now that we have some data we want to train on it.  However, there are two
+	// parameters to the training.  These are the nu and gamma parameters.  Our choice for
+	// these parameters will influence how good the resulting decision function is.  To
+	// test how good a particular choice of these parameters is we can use the
+	// cross_validate_trainer() function to perform n-fold cross validation on our training
+	// data.  However, there is a problem with the way we have sampled our distribution
+	// above.  The problem is that there is a definite ordering to the samples.  That is,
+	// the first half of the samples look like they are from a different distribution than
+	// the second half.  This would screw up the cross validation process but we can fix it
+	// by randomizing the order of the samples with the following function call.
+	randomize_samples(samples, labels);
+
+
+	// The nu parameter has a maximum value that is dependent on the ratio of the +1 to -1
+	// labels in the training data.  This function finds that value.
+	const double max_nu = maximum_nu(labels);
+
+	// here we make an instance of the svm_nu_trainer object that uses our kernel type.
+	svm_nu_trainer<kernel_type> trainer;
+
+	// Now we loop over some different nu and gamma values to see how good they are.  Note
+	// that this is a very simple way to try out a few possible parameter choices.  You
+	// should look at the model_selection_ex.cpp program for examples of more sophisticated
+	// strategies for determining good parameter choices.
+	cout << "开始测试各参数效果" << endl;
+	double Gamma = 0.00001, Nu = 0.00001;
+	double OK = 0;
+	for (double gamma = 0.00001; gamma <= 1; gamma *= 2)
+	{
+		for (double nu = 0.00001; nu < max_nu; nu *= 5)
+		{
+			// tell the trainer the parameters we want to use
+			trainer.set_kernel(kernel_type(gamma));
+			trainer.set_nu(nu);
+
+			cout << "gamma: " << gamma << "    nu: " << nu;
+			// Print out the cross validation accuracy for 3-fold cross validation using
+			// the current gamma and nu.  cross_validate_trainer() returns a row vector.
+			// The first element of the vector is the fraction of +1 training examples
+			// correctly classified and the second number is the fraction of -1 training
+			// examples correctly classified.
+			matrix<double>temp = cross_validate_trainer(trainer, samples, labels, 3);
+			if (OK < (temp(0, 1) + temp(0, 0))) {
+				OK = temp(0, 1) + temp(0, 0);
+				Gamma = gamma;
+				Nu = nu;
+			}
+			cout << "     交叉训练测试结果: " << cross_validate_trainer(trainer, samples, labels, 3);
+		}
+	}
+
+
+	// From looking at the output of the above loop it turns out that a good value for nu
+	// and gamma for this problem is 0.15625 for both.  So that is what we will use.
+
+	// Now we train on the full set of data and obtain the resulting decision function.  We
+	// use the value of 0.15625 for nu and gamma.  The decision function will return values
+	// >= 0 for samples it predicts are in the +1 class and numbers < 0 for samples it
+	// predicts to be in the -1 class.
+	//trainer.set_kernel(kernel_type(0.15625));
+	//trainer.set_nu(0.15625);
+
+	trainer.set_kernel(kernel_type(Gamma));
+	trainer.set_nu(Nu);
+
+	cout << "设置参数Gamma:" << Gamma << " Nu:" << Nu << endl;
+
+	typedef decision_function<kernel_type> dec_funct_type;
+	typedef normalized_function<dec_funct_type> funct_type;
+
+	// Here we are making an instance of the normalized_function object.  This object
+	// provides a convenient way to store the vector normalization information along with
+	// the decision function we are going to learn.  
+	funct_type learned_function;
+	learned_function.normalizer = normalizer;  // save normalization information
+	learned_function.function = trainer.train(samples, labels); // perform the actual SVM training and save the results
+
+
+
+																// print out the number of support vectors in the resulting decision function
+	cout << "\nnumber of support vectors in our learned_function is "
+		<< learned_function.function.basis_vectors.size() << endl;
+
+	// Now let's try this decision_function on some samples we haven't seen before.
+	sample_type sample;
+
+	sample(0) = 3.123;
+	sample(1) = 2;
+	cout << "This is a +1 class example, the classifier output is " << learned_function(sample) << endl;
+
+	sample(0) = 3.123;
+	sample(1) = 9.3545;
+	cout << "This is a +1 class example, the classifier output is " << learned_function(sample) << endl;
+
+	sample(0) = 13.123;
+	sample(1) = 9.3545;
+	cout << "This is a -1 class example, the classifier output is " << learned_function(sample) << endl;
+
+	sample(0) = 13.123;
+	sample(1) = 0;
+	cout << "This is a -1 class example, the classifier output is " << learned_function(sample) << endl;
+
+
+	// We can also train a decision function that reports a well conditioned probability
+	// instead of just a number > 0 for the +1 class and < 0 for the -1 class.  An example
+	// of doing that follows:
+	typedef probabilistic_decision_function<kernel_type> probabilistic_funct_type;
+	typedef normalized_function<probabilistic_funct_type> pfunct_type;
+
+	pfunct_type learned_pfunct;
+	learned_pfunct.normalizer = normalizer;
+	learned_pfunct.function = train_probabilistic_decision_function(trainer, samples, labels, 3);
+	// Now we have a function that returns the probability that a given sample is of the +1 class.  
+
+	// print out the number of support vectors in the resulting decision function.  
+	// (it should be the same as in the one above)
+	cout << "\nnumber of support vectors in our learned_pfunct is "
+		<< learned_pfunct.function.decision_funct.basis_vectors.size() << endl;
+
+	sample(0) = 3.123;
+	sample(1) = 2;
+	cout << "This +1 class example should have high probability.  Its probability is: "
+		<< learned_pfunct(sample) << endl;
+
+	sample(0) = 3.123;
+	sample(1) = 9.3545;
+	cout << "This +1 class example should have high probability.  Its probability is: "
+		<< learned_pfunct(sample) << endl;
+
+	sample(0) = 13.123;
+	sample(1) = 9.3545;
+	cout << "This -1 class example should have low probability.  Its probability is: "
+		<< learned_pfunct(sample) << endl;
+
+	sample(0) = 13.123;
+	sample(1) = 0;
+	cout << "This -1 class example should have low probability.  Its probability is: "
+		<< learned_pfunct(sample) << endl;
+
+
+
+	// Another thing that is worth knowing is that just about everything in dlib is
+	// serializable.  So for example, you can save the learned_pfunct object to disk and
+	// recall it later like so:
+	serialize("saved_function.dat") << learned_pfunct;
+
+	// Now let's open that file back up and load the function object it contains.
+	deserialize("saved_function.dat") >> learned_pfunct;
+
+	// Note that there is also an example program that comes with dlib called the
+	// file_to_code_ex.cpp example.  It is a simple program that takes a file and outputs a
+	// piece of C++ code that is able to fully reproduce the file's contents in the form of
+	// a std::string object.  So you can use that along with the std::istringstream to save
+	// learned decision functions inside your actual C++ code files if you want.  
+
+
+
+
+	// Lastly, note that the decision functions we trained above involved well over 200
+	// basis vectors.  Support vector machines in general tend to find decision functions
+	// that involve a lot of basis vectors.  This is significant because the more basis
+	// vectors in a decision function, the longer it takes to classify new examples.  So
+	// dlib provides the ability to find an approximation to the normal output of a trainer
+	// using fewer basis vectors.  
+
+	// Here we determine the cross validation accuracy when we approximate the output using
+	// only 10 basis vectors.  To do this we use the reduced2() function.  It takes a
+	// trainer object and the number of basis vectors to use and returns a new trainer
+	// object that applies the necessary post processing during the creation of decision
+	// function objects.
+	cout << "\ncross validation accuracy with only 10 support vectors: "
+		<< cross_validate_trainer(reduced2(trainer, 10), samples, labels, 3);
+
+	// Let's print out the original cross validation score too for comparison.
+	cout << "cross validation accuracy with all the original support vectors: "
+		<< cross_validate_trainer(trainer, samples, labels, 3);
+
+	// When you run this program you should see that, for this problem, you can reduce the
+	// number of basis vectors down to 10 without hurting the cross validation accuracy. 
+
+
+	// To get the reduced decision function out we would just do this:
+	learned_function.function = reduced2(trainer, 10).train(samples, labels);
+	// And similarly for the probabilistic_decision_function: 
+	learned_pfunct.function = train_probabilistic_decision_function(reduced2(trainer, 10), samples, labels, 3);
+	cout << "\nnumber of support vectors in our learned_function is "
+		<< learned_function.function.basis_vectors.size() << endl;
+
+	Vec3b green(0, 255, 0), blue(255, 0, 0), red(0, 0, 255), black(0, 0, 0);
+	for (int i = 0; i < 演示图片.rows; ++i)
+		for (int j = 0; j < 演示图片.cols; ++j)
+		{
+			Mat sampleMat = (Mat_<float>(1, 2) << j, i);
+			sample_type sample;
+
+			sample(0) = (i - 250) / 10.0;
+			sample(1) = (j - 250) / 10.0;
+			float response = learned_function(sample);
+
+
+			if (response <0)
+				演示图片.at<Vec3b>(i, j) = green;
+			else if (response >= 0)
+				演示图片.at<Vec3b>(i, j) = blue;
+			else if (response == 3)
+				演示图片.at<Vec3b>(i, j) = red;
+			else if (response == 4)
+				演示图片.at<Vec3b>(i, j) = black;
+		}
+
+	for (int r = -20; r <= 20; ++r)
+	{
+		for (int c = -20; c <= 20; ++c)
+		{
+			// if this point is less than 10 from the origin
+			if (sqrt((double)r*r + c*c) <= 10)
+			{
+				cv::line(演示图片, Point(c * 10 + 250 - 2, r * 10 + 250 - 2), Point(c * 10 + 250 + 2, r * 10 + 250 + 2), Scalar(0, 0, 255));
+				cv::line(演示图片, Point(c * 10 + 250 - 2, r * 10 + 250 + 2), Point(c * 10 + 250 + 2, r * 10 + 250 - 2), Scalar(0, 0, 255));
+			}
+			else
+				cv::circle(演示图片, Point(c * 10 + 250, r * 10 + 250), 1, Scalar(0));
+
+		}
+	}
+
+	imshow("分类结果", 演示图片);
+	waitKey(   -1 );
+	system("pause");
+	return 0;
+}
+
+
+
+
+
+void CnumericalCalculaterDlg::OnBnClickedButton15_dlibSvm()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	
+	AllocConsole();
+	freopen("CONOUT$", "w", stdout);
+
+	main_dlibSvm();
+	FreeConsole();
 }

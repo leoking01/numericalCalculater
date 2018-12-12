@@ -1,20 +1,20 @@
 
-// transMedia2YuvMfcDlg.h : 头文件
+// numericalCalculaterDlg.h : 头文件
 //
 
 #pragma once
 
 
-// CtransMedia2YuvMfcDlg 对话框
-class CtransMedia2YuvMfcDlg : public CDialogEx
+// CnumericalCalculaterDlg 对话框
+class CnumericalCalculaterDlg : public CDialogEx
 {
 // 构造
 public:
-	CtransMedia2YuvMfcDlg(CWnd* pParent = NULL);	// 标准构造函数
+	CnumericalCalculaterDlg(CWnd* pParent = NULL);	// 标准构造函数
 
 // 对话框数据
 #ifdef AFX_DESIGN_TIME
-	enum { IDD = IDD_TRANSMEDIA2YUVMFC_DIALOG };
+	enum { IDD = IDD_numericalCalculater_DIALOG };
 #endif
 
 	protected:
@@ -44,4 +44,7 @@ public:
 	afx_msg void OnBnClickedButton10_video2__383x383x3();
 	afx_msg void OnBnClickedButton11_get2Frequence();
 	afx_msg void OnBnClickedButton12_opencv_player_toobar();
+	afx_msg void OnBnClickedButton13_oneChannels2Three();
+	afx_msg void OnBnClickedButton14_dlibBayes();
+	afx_msg void OnBnClickedButton15_dlibSvm();
 };

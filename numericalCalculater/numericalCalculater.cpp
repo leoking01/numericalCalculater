@@ -11,30 +11,30 @@
 #endif
 
 
-// CtransMedia2YuvMfcApp
+// CnumericalCalculaterApp
 
-BEGIN_MESSAGE_MAP(CtransMedia2YuvMfcApp, CWinApp)
+BEGIN_MESSAGE_MAP(CnumericalCalculaterApp, CWinApp)
 	ON_COMMAND(ID_HELP, &CWinApp::OnHelp)
 END_MESSAGE_MAP()
 
 
-// CtransMedia2YuvMfcApp 构造
+// CnumericalCalculaterApp 构造
 
-CtransMedia2YuvMfcApp::CtransMedia2YuvMfcApp()
+CnumericalCalculaterApp::CnumericalCalculaterApp()
 {
 	// TODO: 在此处添加构造代码，
 	// 将所有重要的初始化放置在 InitInstance 中
 }
 
 
-// 唯一的一个 CtransMedia2YuvMfcApp 对象
+// 唯一的一个 CnumericalCalculaterApp 对象
 
-CtransMedia2YuvMfcApp theApp;
+CnumericalCalculaterApp theApp;
 
 
-// CtransMedia2YuvMfcApp 初始化
+// CnumericalCalculaterApp 初始化
 
-BOOL CtransMedia2YuvMfcApp::InitInstance()
+BOOL CnumericalCalculaterApp::InitInstance()
 {
 	CWinApp::InitInstance();
 
@@ -55,7 +55,7 @@ BOOL CtransMedia2YuvMfcApp::InitInstance()
 	// 例如修改为公司或组织名
 	SetRegistryKey(_T("应用程序向导生成的本地应用程序"));
 
-	CtransMedia2YuvMfcDlg dlg;
+	CnumericalCalculaterDlg dlg;
 	m_pMainWnd = &dlg;
 	INT_PTR nResponse = dlg.DoModal();
 	if (nResponse == IDOK)

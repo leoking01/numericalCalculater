@@ -12,14 +12,14 @@
 
 #include "CommonTools.h"		// 主符号
 
-// CtransMedia2YuvMfcApp: 
+// CnumericalCalculaterApp: 
 // 有关此类的实现，请参阅 numericalCalculater.cpp
 //
 
-class CtransMedia2YuvMfcApp : public CWinApp
+class CnumericalCalculaterApp : public CWinApp
 {
 public:
-	CtransMedia2YuvMfcApp();
+	CnumericalCalculaterApp();
 
 // 重写
 public:
@@ -30,4 +30,4 @@ public:
 	DECLARE_MESSAGE_MAP()
 };
 
-extern CtransMedia2YuvMfcApp theApp;
+extern CnumericalCalculaterApp theApp;
