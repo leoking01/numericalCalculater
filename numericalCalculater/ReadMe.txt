@@ -14,10 +14,10 @@ numericalCalculater.vcxproj.filters
 
 numericalCalculater.h
     这是应用程序的主头文件。
-    其中包括其他项目特定的标头（包括 Resource.h），并声明 CtransMedia2YuvMfcApp 应用程序类。
+    其中包括其他项目特定的标头（包括 Resource.h），并声明 CnumericalCalculaterApp 应用程序类。
 
 numericalCalculater.cpp
-    这是包含应用程序类 CtransMedia2YuvMfcApp 的主应用程序源文件。
+    这是包含应用程序类 CnumericalCalculaterApp 的主应用程序源文件。
 
 numericalCalculater.rc
     这是程序使用的所有 Microsoft Windows 资源的列表。它包括 RES 子目录中存储的图标、位图和光标。此文件可以直接在 Microsoft Visual C++ 中进行编辑。项目资源包含在 2052 中。
@@ -33,8 +33,8 @@ res\numericalCalculater.rc2
 
 应用程序向导创建一个对话框类：
 
-transMedia2YuvMfcDlg.h、transMedia2YuvMfcDlg.cpp - 对话框
-    这些文件包含 CtransMedia2YuvMfcDlg 类。此类定义应用程序的主对话框的行为。对话框模板包含在 numericalCalculater.rc 中，该文件可以在 Microsoft Visual C++ 中编辑。
+numericalCalculaterDlg.h、numericalCalculaterDlg.cpp - 对话框
+    这些文件包含 CnumericalCalculaterDlg 类。此类定义应用程序的主对话框的行为。对话框模板包含在 numericalCalculater.rc 中，该文件可以在 Microsoft Visual C++ 中编辑。
 
 /////////////////////////////////////////////////////////////////////////////
 
