@@ -47,4 +47,9 @@ public:
 	afx_msg void OnBnClickedButton13_oneChannels2Three();
 	afx_msg void OnBnClickedButton14_dlibBayes();
 	afx_msg void OnBnClickedButton15_dlibSvm();
+	afx_msg void OnBnClickedButton16_videoObjectTrack();
+	afx_msg void OnBnClickedButton17_dlib3dPointCloud();
+	afx_msg void OnBnClickedButton18_dlibAssignment();
+	afx_msg void OnBnClickedButton19_dlibMultiClassify();
+	afx_msg void OnBnClickedButton20_dlibKMeanCluster();
 };

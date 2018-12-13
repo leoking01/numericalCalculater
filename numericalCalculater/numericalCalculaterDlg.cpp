@@ -79,6 +79,11 @@ BEGIN_MESSAGE_MAP(CnumericalCalculaterDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON13, &CnumericalCalculaterDlg::OnBnClickedButton13_oneChannels2Three)
 	ON_BN_CLICKED(IDC_BUTTON14, &CnumericalCalculaterDlg::OnBnClickedButton14_dlibBayes)
 	ON_BN_CLICKED(IDC_BUTTON15, &CnumericalCalculaterDlg::OnBnClickedButton15_dlibSvm)
+	ON_BN_CLICKED(IDC_BUTTON16, &CnumericalCalculaterDlg::OnBnClickedButton16_videoObjectTrack)
+	ON_BN_CLICKED(IDC_BUTTON17, &CnumericalCalculaterDlg::OnBnClickedButton17_dlib3dPointCloud)
+	ON_BN_CLICKED(IDC_BUTTON18, &CnumericalCalculaterDlg::OnBnClickedButton18_dlibAssignment)
+	ON_BN_CLICKED(IDC_BUTTON19, &CnumericalCalculaterDlg::OnBnClickedButton19_dlibMultiClassify)
+	ON_BN_CLICKED(IDC_BUTTON20, &CnumericalCalculaterDlg::OnBnClickedButton20_dlibKMeanCluster)
 END_MESSAGE_MAP()
 
 
@@ -2408,3 +2413,968 @@ void CnumericalCalculaterDlg::OnBnClickedButton15_dlibSvm()
 	main_dlibSvm();
 	FreeConsole();
 }
+
+
+
+
+
+
+// The contents of this file are in the public domain. See LICENSE_FOR_EXAMPLE_PROGRAMS.txt
+/*
+
+This example shows how to use the correlation_tracker from the dlib C++ library.  This
+object lets you track the position of an object as it moves from frame to frame in a
+video sequence.  To use it, you give the correlation_tracker the bounding box of the
+object you want to track in the current video frame.  Then it will identify the
+location of the object in subsequent frames.
+
+In this particular example, we are going to run on the video sequence that comes with
+dlib, which can be found in the examples/video_frames folder.  This video shows a juice
+box sitting on a table and someone is waving the camera around.  The task is to track the
+position of the juice box as the camera moves around.
+*/
+
+#include <dlib/image_processing.h>
+#include <dlib/gui_widgets.h>
+#include <dlib/image_io.h>
+#include <dlib/dir_nav.h>
+
+
+using namespace dlib;
+using namespace std;
+
+int main_videoObjectTrack(int argc, char** argv) try
+{
+	if (argc != 2)
+	{
+		cout << "Call this program like this: " << endl;
+		cout << "./video_tracking_ex ../video_frames" << endl;
+		return 1;
+	}
+
+	// Get the list of video frames.  
+	//std::vector<file> files = get_files_in_directory_tree(argv[1], match_ending(".jpg"));
+	cout << "argv[1] : " << argv[1] <<   endl;
+	std::vector<file> files = get_files_in_directory_tree(argv[1], match_ending(".png"));
+	std::sort(files.begin(), files.end());
+	if (files.size() == 0)
+	{
+		cout << "No images found in " << argv[1] << endl;
+		return 1;
+	}
+	else
+	{
+		cout << "files.size() =  " << files.size() << endl;
+	}
+
+	// Load the first frame.  
+	array2d<unsigned char> img;
+	load_image(img, files[0]);
+	// Now create a tracker and start a track on the juice box.  If you look at the first
+	// frame you will see that the juice box is centered at pixel point(92,110) and 38
+	// pixels wide and 86 pixels tall.
+	correlation_tracker tracker;
+	//tracker.start_track(img, centered_rect(point(172, 135), 228, 116 ));//  book  
+	tracker.start_track(img, centered_rect(point(190, 75), 60, 50));//  hand  
+
+	// Now run the tracker.  All we have to do is call tracker.update() and it will keep
+	// track of the juice box!
+	image_window win;
+	//for (unsigned long i = 1; i < files.size(); ++i)
+	for (unsigned long i = 0; i < files.size(); ++i)
+	{
+		load_image(img, files[i]);
+		tracker.update(img);
+
+		win.set_image(img);
+		win.clear_overlay();
+		win.add_overlay(tracker.get_position());
+
+		cout << "hit enter to process next frame" << endl;
+		cin.get();
+		if (0 == i)
+			waitKey(   3000  );
+	}
+	return 0;
+}
+catch (std::exception& e)
+{
+	cout << e.what() << endl;
+	return -1;
+}
+
+
+
+
+
+void CnumericalCalculaterDlg::OnBnClickedButton16_videoObjectTrack()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	AllocConsole();
+	freopen("CONOUT$", "w", stdout);
+
+ 
+
+	char *  nameVideo[] = { "D:/tof_img", "D:/tof_img"    };
+	main_videoObjectTrack( 2,    nameVideo     );
+
+	FreeConsole();
+}
+
+#include <dlib/gui_widgets.h>
+#include <dlib/image_transforms.h>
+#include <cmath>
+
+using namespace dlib;
+using namespace std;
+
+// ----------------------------------------------------------------------------------------
+
+int main_dlib3dPointCloud()
+{
+	// Let's make a point cloud that looks like a 3D spiral.
+	std::vector<perspective_window::overlay_dot> points;
+	dlib::rand rnd;
+	for (double i = 0; i < 20; i += 0.001)
+	{
+		// Get a point on a spiral
+		dlib::vector<double> val(sin(i), cos(i), i / 4);
+
+		// Now add some random noise to it
+		dlib::vector<double> temp(rnd.get_random_gaussian(),
+			rnd.get_random_gaussian(),
+			rnd.get_random_gaussian());
+		val += temp / 20;
+
+		// Pick a color based on how far we are along the spiral
+		rgb_pixel color = colormap_jet(i, 0, 20);
+
+		// And add the point to the list of points we will display
+		points.push_back(perspective_window::overlay_dot(val, color));
+	}
+
+	// Now finally display the point cloud.
+	perspective_window win;
+	win.set_title("perspective_window 3D point cloud");
+	win.add_overlay(points);
+	win.wait_until_closed();
+	return   0;
+}
+
+void CnumericalCalculaterDlg::OnBnClickedButton17_dlib3dPointCloud()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	AllocConsole();
+	freopen("CONOUT$", "w", stdout);
+
+	main_dlib3dPointCloud();
+
+	FreeConsole();
+}
+
+
+
+
+
+
+
+
+
+
+// The contents of this file are in the public domain. See LICENSE_FOR_EXAMPLE_PROGRAMS.txt
+/*
+
+This is an example illustrating the use of the dlib machine learning tools for
+learning to solve the assignment problem.
+
+Many tasks in computer vision or natural language processing can be thought of
+as assignment problems.  For example, in a computer vision application where
+you are trying to track objects moving around in video, you likely need to solve
+an association problem every time you get a new video frame.  That is, each new
+frame will contain objects (e.g. people, cars, etc.) and you will want to
+determine which of these objects are actually things you have seen in previous
+frames.
+
+The assignment problem can be optimally solved using the well known Hungarian
+algorithm.  However, this algorithm requires the user to supply some function
+which measures the "goodness" of an individual association.  In many cases the
+best way to measure this goodness isn't obvious and therefore machine learning
+methods are used.
+
+The remainder of this example will show you how to learn a goodness function
+which is optimal, in a certain sense, for use with the Hungarian algorithm.  To
+do this, we will make a simple dataset of example associations and use them to
+train a supervised machine learning method.
+
+Finally, note that there is a whole example program dedicated to assignment
+learning problems where you are trying to make an object tracker.  So if that is
+what you are interested in then take a look at the learning_to_track_ex.cpp
+example program.
+*/
+
+
+#include <iostream>
+#include <dlib/svm_threaded.h>
+
+using namespace std;
+using namespace dlib;
+
+
+// ----------------------------------------------------------------------------------------
+
+/*
+In an association problem, we will talk about the "Left Hand Set" (LHS) and the
+"Right Hand Set" (RHS).  The task will be to learn to map all elements of LHS to
+unique elements of RHS.  If an element of LHS can't be mapped to a unique element of
+RHS for some reason (e.g. LHS is bigger than RHS) then it can also be mapped to the
+special -1 output, indicating no mapping to RHS.
+
+So the first step is to define the type of elements in each of these sets.  In the
+code below we will use column vectors in both LHS and RHS.  However, in general,
+they can each contain any type you like.  LHS can even contain a different type
+than RHS.
+*/
+
+typedef dlib::matrix<double, 0, 1> column_vector;
+
+// This type represents a pair of LHS and RHS.  That is, sample_type::first
+// contains a left hand set and sample_type::second contains a right hand set.
+typedef std::pair<std::vector<column_vector>, std::vector<column_vector> > sample_type;
+
+// This type will contain the association information between LHS and RHS.  That is,
+// it will determine which elements of LHS map to which elements of RHS.
+typedef std::vector<long> label_type;
+
+// In this example, all our LHS and RHS elements will be 3-dimensional vectors.
+const unsigned long num_dims = 3;
+
+void make_data(
+	std::vector<sample_type>& samples,
+	std::vector<label_type>& labels
+);
+/*!
+ensures
+- This function creates a training dataset of 5 example associations.
+- #samples.size() == 5
+- #labels.size() == 5
+- for all valid i:
+- #samples[i].first == a left hand set
+- #samples[i].second == a right hand set
+- #labels[i] == a set of integers indicating how to map LHS to RHS.  To be
+precise:
+- #samples[i].first.size() == #labels[i].size()
+- for all valid j:
+-1 <= #labels[i][j] < #samples[i].second.size()
+(A value of -1 indicates that #samples[i].first[j] isn't associated with anything.
+All other values indicate the associating element of #samples[i].second)
+- All elements of #labels[i] which are not equal to -1 are unique.  That is,
+multiple elements of #samples[i].first can't associate to the same element
+in #samples[i].second.
+!*/
+
+// ----------------------------------------------------------------------------------------
+
+struct feature_extractor
+{
+	/*!
+	Recall that our task is to learn the "goodness of assignment" function for
+	use with the Hungarian algorithm.  The dlib tools assume this function
+	can be written as:
+	match_score(l,r) == dot(w, PSI(l,r)) + bias
+	where l is an element of LHS, r is an element of RHS, w is a parameter vector,
+	bias is a scalar value, and PSI() is a user supplied feature extractor.
+
+	This feature_extractor is where we implement PSI().  How you implement this
+	is highly problem dependent.
+	!*/
+
+	// The type of feature vector returned from get_features().  This must be either
+	// a dlib::matrix or a sparse vector.
+	typedef column_vector feature_vector_type;
+
+	// The types of elements in the LHS and RHS sets
+	typedef column_vector lhs_element;
+	typedef column_vector rhs_element;
+
+
+	unsigned long num_features() const
+	{
+		// Return the dimensionality of feature vectors produced by get_features()
+		return num_dims;
+	}
+
+	void get_features(
+		const lhs_element& left,
+		const rhs_element& right,
+		feature_vector_type& feats
+	) const
+		/*!
+		ensures
+		- #feats == PSI(left,right)
+		(i.e. This function computes a feature vector which, in some sense,
+		captures information useful for deciding if matching left to right
+		is "good").
+		!*/
+	{
+		// Let's just use the squared difference between each vector as our features.
+		// However, it should be emphasized that how to compute the features here is very
+		// problem dependent.  
+		feats = squared(left - right);
+	}
+
+};
+
+// We need to define serialize() and deserialize() for our feature extractor if we want 
+// to be able to serialize and deserialize our learned models.  In this case the 
+// implementation is empty since our feature_extractor doesn't have any state.  But you 
+// might define more complex feature extractors which have state that needs to be saved.
+void serialize(const feature_extractor&, std::ostream&) {}
+void deserialize(feature_extractor&, std::istream&) {}
+
+// ----------------------------------------------------------------------------------------
+
+int main_dlibAssignment()
+{
+	try
+	{
+		// Get a small bit of training data.
+		std::vector<sample_type> samples;
+		std::vector<label_type> labels;
+		make_data(samples, labels);
+
+
+		structural_assignment_trainer<feature_extractor> trainer;
+		// This is the common SVM C parameter.  Larger values encourage the
+		// trainer to attempt to fit the data exactly but might overfit. 
+		// In general, you determine this parameter by cross-validation.
+		trainer.set_c(10);
+		// This trainer can use multiple CPU cores to speed up the training.  
+		// So set this to the number of available CPU cores. 
+		trainer.set_num_threads(4);
+
+		// Do the training and save the results in assigner.
+		assignment_function<feature_extractor> assigner = trainer.train(samples, labels);
+
+
+		// Test the assigner on our data.  The output will indicate that it makes the
+		// correct associations on all samples.
+		cout << "Test the learned assignment function: " << endl;
+		for (unsigned long i = 0; i < samples.size(); ++i)
+		{
+			// Predict the assignments for the LHS and RHS in samples[i].   
+			std::vector<long> predicted_assignments = assigner(samples[i]);
+			cout << "true labels:      " << trans(mat(labels[i]));
+			cout << "predicted labels: " << trans(mat(predicted_assignments)) << endl;
+		}
+
+		// We can also use this tool to compute the percentage of assignments predicted correctly.
+		cout << "training accuracy: " << test_assignment_function(assigner, samples, labels) << endl;
+
+
+		// Since testing on your training data is a really bad idea, we can also do 5-fold cross validation.
+		// Happily, this also indicates that all associations were made correctly.
+		randomize_samples(samples, labels);
+		cout << "cv accuracy:       " << cross_validate_assignment_trainer(trainer, samples, labels, 5) << endl;
+
+
+
+		// Finally, the assigner can be serialized to disk just like most dlib objects.
+		serialize("assigner.dat") << assigner;
+
+		// recall from disk
+		deserialize("assigner.dat") >> assigner;
+		return  0;
+	}
+	catch (std::exception& e)
+	{
+		cout << "EXCEPTION THROWN" << endl;
+		cout << e.what() << endl;
+		return  0;
+	}
+}
+
+// ----------------------------------------------------------------------------------------
+
+void make_data(
+	std::vector<sample_type>& samples,
+	std::vector<label_type>& labels
+)
+{
+	// Make four different vectors.  We will use them to make example assignments.
+	column_vector A(num_dims), B(num_dims), C(num_dims), D(num_dims);
+	A = 1, 0, 0;
+	B = 0, 1, 0;
+	C = 0, 0, 1;
+	D = 0, 1, 1;
+
+	std::vector<column_vector> lhs;
+	std::vector<column_vector> rhs;
+	label_type mapping;
+
+	// In all the assignments to follow, we will only say an element of the LHS 
+	// matches an element of the RHS if the two are equal.  So A matches with A, 
+	// B with B, etc.  But never A with C, for example.
+	// ------------------------
+
+	lhs.resize(3);
+	lhs[0] = A;
+	lhs[1] = B;
+	lhs[2] = C;
+
+	rhs.resize(3);
+	rhs[0] = B;
+	rhs[1] = A;
+	rhs[2] = C;
+
+	mapping.resize(3);
+	mapping[0] = 1;  // lhs[0] matches rhs[1]
+	mapping[1] = 0;  // lhs[1] matches rhs[0]
+	mapping[2] = 2;  // lhs[2] matches rhs[2]
+
+	samples.push_back(make_pair(lhs, rhs));
+	labels.push_back(mapping);
+
+	// ------------------------
+
+	lhs[0] = C;
+	lhs[1] = A;
+	lhs[2] = B;
+
+	rhs[0] = A;
+	rhs[1] = B;
+	rhs[2] = D;
+
+	mapping[0] = -1;  // The -1 indicates that lhs[0] doesn't match anything in rhs.
+	mapping[1] = 0;   // lhs[1] matches rhs[0]
+	mapping[2] = 1;   // lhs[2] matches rhs[1]
+
+	samples.push_back(make_pair(lhs, rhs));
+	labels.push_back(mapping);
+
+	// ------------------------
+
+	lhs[0] = A;
+	lhs[1] = B;
+	lhs[2] = C;
+
+	rhs.resize(4);
+	rhs[0] = C;
+	rhs[1] = B;
+	rhs[2] = A;
+	rhs[3] = D;
+
+	mapping[0] = 2;
+	mapping[1] = 1;
+	mapping[2] = 0;
+
+	samples.push_back(make_pair(lhs, rhs));
+	labels.push_back(mapping);
+
+	// ------------------------
+
+	lhs.resize(2);
+	lhs[0] = B;
+	lhs[1] = C;
+
+	rhs.resize(3);
+	rhs[0] = C;
+	rhs[1] = A;
+	rhs[2] = D;
+
+	mapping.resize(2);
+	mapping[0] = -1;
+	mapping[1] = 0;
+
+	samples.push_back(make_pair(lhs, rhs));
+	labels.push_back(mapping);
+
+	// ------------------------
+
+	lhs.resize(3);
+	lhs[0] = D;
+	lhs[1] = B;
+	lhs[2] = C;
+
+	// rhs will be empty.  So none of the items in lhs can match anything.
+	rhs.resize(0);
+
+	mapping.resize(3);
+	mapping[0] = -1;
+	mapping[1] = -1;
+	mapping[2] = -1;
+
+	samples.push_back(make_pair(lhs, rhs));
+	labels.push_back(mapping);
+
+}
+
+
+
+
+void CnumericalCalculaterDlg::OnBnClickedButton18_dlibAssignment()
+{
+	// TODO: 在此添加控件通知处理程序代码  _dlibAssignment
+
+	AllocConsole();
+	freopen("CONOUT$", "w", stdout);
+
+	main_dlibAssignment();
+
+	FreeConsole();
+}
+
+
+
+
+
+
+
+//
+//// The contents of this file are in the public domain. See LICENSE_FOR_EXAMPLE_PROGRAMS.txt
+///*
+//This is an example illustrating the use of the multiclass classification tools
+//from the dlib C++ Library.  Specifically, this example will make points from
+//three classes and show you how to train a multiclass classifier to recognize
+//these three classes.
+//
+//The classes are as follows:
+//- class 1: points very close to the origin
+//- class 2: points on the circle of radius 10 around the origin
+//- class 3: points that are on a circle of radius 4 but not around the origin at all
+//*/
+//
+//#include <dlib/svm_threaded.h>
+//
+//#include <iostream>
+//#include <vector>
+//
+//#include <dlib/rand.h>
+//
+//using namespace std;
+//using namespace dlib;
+//
+//// Our data will be 2-dimensional data. So declare an appropriate type to contain these points.
+//typedef matrix<double, 2, 1> sample_type;
+//
+//// ----------------------------------------------------------------------------------------
+//
+//void generate_data(
+//	std::vector<sample_type>& samples,
+//	std::vector<double>& labels
+//);
+///*!
+//ensures
+//- make some 3 class data as described above.
+//- Create 60 points from class 1
+//- Create 70 points from class 2
+//- Create 80 points from class 3
+//!*/
+//
+//// ----------------------------------------------------------------------------------------
+//
+//int main_dlibMultiClassify()
+//{
+//	try
+//	{
+//		std::vector<sample_type> samples;
+//		std::vector<double> labels;
+//
+//		// First, get our labeled set of training data
+//		generate_data(samples, labels);
+//
+//		cout << "samples.size(): " << samples.size() << endl;
+//
+//		// The main object in this example program is the one_vs_one_trainer.  It is essentially 
+//		// a container class for regular binary classifier trainer objects.  In particular, it 
+//		// uses the any_trainer object to store any kind of trainer object that implements a 
+//		// .train(samples,labels) function which returns some kind of learned decision function.  
+//		// It uses these binary classifiers to construct a voting multiclass classifier.  If 
+//		// there are N classes then it trains N*(N-1)/2 binary classifiers, one for each pair of 
+//		// labels, which then vote on the label of a sample.
+//		//
+//		// In this example program we will work with a one_vs_one_trainer object which stores any 
+//		// kind of trainer that uses our sample_type samples.
+//		typedef one_vs_one_trainer<any_trainer<sample_type> > ovo_trainer;
+//
+//
+//		// Finally, make the one_vs_one_trainer.
+//		ovo_trainer trainer;
+//
+//
+//		// Next, we will make two different binary classification trainer objects.  One
+//		// which uses kernel ridge regression and RBF kernels and another which uses a
+//		// support vector machine and polynomial kernels.  The particular details don't matter.
+//		// The point of this part of the example is that you can use any kind of trainer object
+//		// with the one_vs_one_trainer.
+//		typedef polynomial_kernel<sample_type> poly_kernel;
+//		typedef radial_basis_kernel<sample_type> rbf_kernel;
+//
+//		// make the binary trainers and set some parameters
+//		krr_trainer<rbf_kernel> rbf_trainer;
+//		svm_nu_trainer<poly_kernel> poly_trainer;
+//		poly_trainer.set_kernel(poly_kernel(0.1, 1, 2));
+//		rbf_trainer.set_kernel(rbf_kernel(0.1));
+//
+//
+//		// Now tell the one_vs_one_trainer that, by default, it should use the rbf_trainer
+//		// to solve the individual binary classification subproblems.
+//		trainer.set_trainer(rbf_trainer);
+//		// We can also get more specific.  Here we tell the one_vs_one_trainer to use the
+//		// poly_trainer to solve the class 1 vs class 2 subproblem.  All the others will
+//		// still be solved with the rbf_trainer.
+//		trainer.set_trainer(poly_trainer, 1, 2);
+//
+//		// Now let's do 5-fold cross-validation using the one_vs_one_trainer we just setup.
+//		// As an aside, always shuffle the order of the samples before doing cross validation.  
+//		// For a discussion of why this is a good idea see the svm_ex.cpp example.
+//		randomize_samples(samples, labels);
+//		cout << "cross validation: \n" << cross_validate_multiclass_trainer(trainer, samples, labels, 5) << endl;
+//		// The output is shown below.  It is the confusion matrix which describes the results.  Each row 
+//		// corresponds to a class of data and each column to a prediction.  Reading from top to bottom, 
+//		// the rows correspond to the class labels if the labels have been listed in sorted order.  So the
+//		// top row corresponds to class 1, the middle row to class 2, and the bottom row to class 3.  The
+//		// columns are organized similarly, with the left most column showing how many samples were predicted
+//		// as members of class 1.
+//		// 
+//		// So in the results below we can see that, for the class 1 samples, 60 of them were correctly predicted
+//		// to be members of class 1 and 0 were incorrectly classified.  Similarly, the other two classes of data
+//		// are perfectly classified.
+//		/*
+//		cross validation:
+//		60  0  0
+//		0 70  0
+//		0  0 80
+//		*/
+//
+//		// Next, if you wanted to obtain the decision rule learned by a one_vs_one_trainer you 
+//		// would store it into a one_vs_one_decision_function.
+//		one_vs_one_decision_function<ovo_trainer> df = trainer.train(samples, labels);
+//
+//		cout << "predicted label: " << df(samples[0]) << ", true label: " << labels[0] << endl;
+//		cout << "predicted label: " << df(samples[90]) << ", true label: " << labels[90] << endl;
+//		// The output is:
+//		/*
+//		predicted label: 2, true label: 2
+//		predicted label: 1, true label: 1
+//		*/
+//
+//
+//		// If you want to save a one_vs_one_decision_function to disk, you can do
+//		// so.  However, you must declare what kind of decision functions it contains. 
+//		one_vs_one_decision_function<ovo_trainer,
+//			decision_function<poly_kernel>,  // This is the output of the poly_trainer
+//			decision_function<rbf_kernel>    // This is the output of the rbf_trainer
+//		> df2, df3;
+//
+//
+//		// Put df into df2 and then save df2 to disk.  Note that we could have also said
+//		// df2 = trainer.train(samples, labels);  But doing it this way avoids retraining.
+//		df2 = df;
+//		serialize("df.dat") << df2;
+//
+//		// load the function back in from disk and store it in df3.  
+//		deserialize("df.dat") >> df3;
+//
+//
+//		// Test df3 to see that this worked.
+//		cout << endl;
+//		cout << "predicted label: " << df3(samples[0]) << ", true label: " << labels[0] << endl;
+//		cout << "predicted label: " << df3(samples[90]) << ", true label: " << labels[90] << endl;
+//		// Test df3 on the samples and labels and print the confusion matrix.
+//		cout << "test deserialized function: \n" << test_multiclass_decision_function(df3, samples, labels) << endl;
+//
+//
+//
+//
+//
+//		// Finally, if you want to get the binary classifiers from inside a multiclass decision
+//		// function you can do it by calling get_binary_decision_functions() like so:
+//		one_vs_one_decision_function<ovo_trainer>::binary_function_table functs;
+//		functs = df.get_binary_decision_functions();
+//		cout << "number of binary decision functions in df: " << functs.size() << endl;
+//		// The functs object is a std::map which maps pairs of labels to binary decision
+//		// functions.  So we can access the individual decision functions like so:
+//		decision_function<poly_kernel> df_1_2 = any_cast<decision_function<poly_kernel> >(functs[make_unordered_pair(1, 2)]);
+//		decision_function<rbf_kernel>  df_1_3 = any_cast<decision_function<rbf_kernel>  >(functs[make_unordered_pair(1, 3)]);
+//		// df_1_2 contains the binary decision function that votes for class 1 vs. 2.
+//		// Similarly, df_1_3 contains the classifier that votes for 1 vs. 3.
+//
+//		// Note that the multiclass decision function doesn't know what kind of binary
+//		// decision functions it contains.  So we have to use any_cast to explicitly cast
+//		// them back into the concrete type.  If you make a mistake and try to any_cast a
+//		// binary decision function into the wrong type of function any_cast will throw a
+//		// bad_any_cast exception.
+//		return 0;
+//	}
+//	catch (std::exception& e)
+//	{
+//		cout << "exception thrown!" << endl;
+//		cout << e.what() << endl;
+//		return 0;
+//	}
+//}
+//
+//// ----------------------------------------------------------------------------------------
+//
+//void generate_data(
+//	std::vector<sample_type>& samples,
+//	std::vector<double>& labels
+//)
+//{
+//	const long num = 50;
+//
+//	sample_type m;
+//
+//	dlib::rand rnd;
+//
+//
+//	// make some samples near the origin
+//	double radius = 0.5;
+//	for (long i = 0; i < num + 10; ++i)
+//	{
+//		double sign = 1;
+//		if (rnd.get_random_double() < 0.5)
+//			sign = -1;
+//		m(0) = 2 * radius*rnd.get_random_double() - radius;
+//		m(1) = sign*sqrt(radius*radius - m(0)*m(0));
+//
+//		// add this sample to our set of training samples 
+//		samples.push_back(m);
+//		labels.push_back(1);
+//	}
+//
+//	// make some samples in a circle around the origin but far away
+//	radius = 10.0;
+//	for (long i = 0; i < num + 20; ++i)
+//	{
+//		double sign = 1;
+//		if (rnd.get_random_double() < 0.5)
+//			sign = -1;
+//		m(0) = 2 * radius*rnd.get_random_double() - radius;
+//		m(1) = sign*sqrt(radius*radius - m(0)*m(0));
+//
+//		// add this sample to our set of training samples 
+//		samples.push_back(m);
+//		labels.push_back(2);
+//	}
+//
+//	// make some samples in a circle around the point (25,25) 
+//	radius = 4.0;
+//	for (long i = 0; i < num + 30; ++i)
+//	{
+//		double sign = 1;
+//		if (rnd.get_random_double() < 0.5)
+//			sign = -1;
+//		m(0) = 2 * radius*rnd.get_random_double() - radius;
+//		m(1) = sign*sqrt(radius*radius - m(0)*m(0));
+//
+//		// translate this point away from the origin
+//		m(0) += 25;
+//		m(1) += 25;
+//
+//		// add this sample to our set of training samples 
+//		samples.push_back(m);
+//		labels.push_back(3);
+//	}
+//}
+//
+//// ----------------------------------------------------------------------------------------
+//
+//
+//
+void CnumericalCalculaterDlg::OnBnClickedButton19_dlibMultiClassify()
+{
+//	// TODO: 在此添加控件通知处理程序代码
+	AllocConsole();
+	freopen("CONOUT$", "w", stdout);
+//	main_dlibMultiClassify();
+	FreeConsole();
+}
+
+
+
+
+
+
+
+
+
+
+
+// The contents of this file are in the public domain. See LICENSE_FOR_EXAMPLE_PROGRAMS.txt
+/*
+This is an example illustrating the use of the kkmeans object
+and spectral_cluster() routine from the dlib C++ Library.
+
+The kkmeans object is an implementation of a kernelized k-means clustering
+algorithm.  It is implemented by using the kcentroid object to represent
+each center found by the usual k-means clustering algorithm.
+
+So this object allows you to perform non-linear clustering in the same way
+a svm classifier finds non-linear decision surfaces.
+
+This example will make points from 3 classes and perform kernelized k-means
+clustering on those points.  It will also do the same thing using spectral
+clustering.
+
+The classes are as follows:
+- points very close to the origin
+- points on the circle of radius 10 around the origin
+- points that are on a circle of radius 4 but not around the origin at all
+*/
+
+#include <iostream>
+#include <vector>
+
+#include <dlib/clustering.h>
+#include <dlib/rand.h>
+
+using namespace std;
+using namespace dlib;
+
+int main_dlibKMeanCluster()
+{
+	// Here we declare that our samples will be 2 dimensional column vectors.  
+	// (Note that if you don't know the dimensionality of your vectors at compile time
+	// you can change the 2 to a 0 and then set the size at runtime)
+	typedef matrix<double, 2, 1> sample_type;
+
+	// Now we are making a typedef for the kind of kernel we want to use.  I picked the
+	// radial basis kernel because it only has one parameter and generally gives good
+	// results without much fiddling.
+	typedef radial_basis_kernel<sample_type> kernel_type;
+
+
+	// Here we declare an instance of the kcentroid object.  It is the object used to 
+	// represent each of the centers used for clustering.  The kcentroid has 3 parameters 
+	// you need to set.  The first argument to the constructor is the kernel we wish to 
+	// use.  The second is a parameter that determines the numerical accuracy with which 
+	// the object will perform part of the learning algorithm.  Generally, smaller values 
+	// give better results but cause the algorithm to attempt to use more dictionary vectors 
+	// (and thus run slower and use more memory).  The third argument, however, is the 
+	// maximum number of dictionary vectors a kcentroid is allowed to use.  So you can use
+	// it to control the runtime complexity.  
+	kcentroid<kernel_type> kc(kernel_type(0.1), 0.01, 8);
+
+	// Now we make an instance of the kkmeans object and tell it to use kcentroid objects
+	// that are configured with the parameters from the kc object we defined above.
+	kkmeans<kernel_type> test(kc);
+
+	std::vector<sample_type> samples;
+	std::vector<sample_type> initial_centers;
+
+	sample_type m;
+
+	dlib::rand rnd;
+
+	// we will make 50 points from each class
+	const long num = 50;
+
+	// make some samples near the origin
+	double radius = 0.5;
+	for (long i = 0; i < num; ++i)
+	{
+		double sign = 1;
+		if (rnd.get_random_double() < 0.5)
+			sign = -1;
+		m(0) = 2 * radius*rnd.get_random_double() - radius;
+		m(1) = sign*sqrt(radius*radius - m(0)*m(0));
+
+		// add this sample to our set of samples we will run k-means 
+		samples.push_back(m);
+	}
+
+	// make some samples in a circle around the origin but far away
+	radius = 10.0;
+	for (long i = 0; i < num; ++i)
+	{
+		double sign = 1;
+		if (rnd.get_random_double() < 0.5)
+			sign = -1;
+		m(0) = 2 * radius*rnd.get_random_double() - radius;
+		m(1) = sign*sqrt(radius*radius - m(0)*m(0));
+
+		// add this sample to our set of samples we will run k-means 
+		samples.push_back(m);
+	}
+
+	// make some samples in a circle around the point (25,25) 
+	radius = 4.0;
+	for (long i = 0; i < num; ++i)
+	{
+		double sign = 1;
+		if (rnd.get_random_double() < 0.5)
+			sign = -1;
+		m(0) = 2 * radius*rnd.get_random_double() - radius;
+		m(1) = sign*sqrt(radius*radius - m(0)*m(0));
+
+		// translate this point away from the origin
+		m(0) += 25;
+		m(1) += 25;
+
+		// add this sample to our set of samples we will run k-means 
+		samples.push_back(m);
+	}
+
+	// tell the kkmeans object we made that we want to run k-means with k set to 3. 
+	// (i.e. we want 3 clusters)
+	test.set_number_of_centers(3);
+
+	// You need to pick some initial centers for the k-means algorithm.  So here
+	// we will use the dlib::pick_initial_centers() function which tries to find
+	// n points that are far apart (basically).  
+	pick_initial_centers(3, initial_centers, samples, test.get_kernel());
+
+	// now run the k-means algorithm on our set of samples.  
+	test.train(samples, initial_centers);
+
+	// now loop over all our samples and print out their predicted class.  In this example
+	// all points are correctly identified.
+	cout << "输出训练数据：test(samples ) = "<<  endl;
+	for (unsigned long i = 0; i < samples.size() / 3; ++i)
+	{
+		cout <<"( "<< test(samples[i]) << " ";
+		cout << test(samples[i + num]) << " ";
+		cout << test(samples[i + 2 * num]) << ") ";
+	}
+	cout << endl;
+
+	// Now print out how many dictionary vectors each center used.  Note that 
+	// the maximum number of 8 was reached.  If you went back to the kcentroid 
+	// constructor and changed the 8 to some bigger number you would see that these
+	// numbers would go up.  However, 8 is all we need to correctly cluster this dataset.
+	cout << "输出各个k聚类中心的字典长度： " << endl;
+	cout << "num dictionary vectors for center 0: " << test.get_kcentroid(0).dictionary_size() << endl;
+	cout << "num dictionary vectors for center 1: " << test.get_kcentroid(1).dictionary_size() << endl;
+	cout << "num dictionary vectors for center 2: " << test.get_kcentroid(2).dictionary_size() << endl;
+
+
+	// Finally, we can also solve the same kind of non-linear clustering problem with
+	// spectral_cluster().  The output is a vector that indicates which cluster each sample
+	// belongs to.  Just like with kkmeans, it assigns each point to the correct cluster.
+	cout << "输出特殊聚类的分配： " << endl;
+	std::vector<unsigned long> assignments = spectral_cluster(kernel_type(0.1), samples, 3);
+	cout << "mat(assignments) =  " << endl;
+	cout << mat(assignments) << endl;
+	cout << "finish. " <<  endl;
+	return  0;
+}
+
+
+
+void CnumericalCalculaterDlg::OnBnClickedButton20_dlibKMeanCluster()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	AllocConsole();
+	freopen("CONOUT$", "w", stdout);
+	main_dlibKMeanCluster();
+	FreeConsole();
+}
+
+
+
+
+
+
+
+
