@@ -84,6 +84,8 @@ BEGIN_MESSAGE_MAP(CnumericalCalculaterDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON18, &CnumericalCalculaterDlg::OnBnClickedButton18_dlibAssignment)
 	ON_BN_CLICKED(IDC_BUTTON19, &CnumericalCalculaterDlg::OnBnClickedButton19_dlibMultiClassify)
 	ON_BN_CLICKED(IDC_BUTTON20, &CnumericalCalculaterDlg::OnBnClickedButton20_dlibKMeanCluster)
+	ON_BN_CLICKED(IDC_BUTTON21, &CnumericalCalculaterDlg::OnBnClickedButton21_tr01)
+	ON_BN_CLICKED(IDC_BUTTON22, &CnumericalCalculaterDlg::OnBnClickedButton22_tr02)
 END_MESSAGE_MAP()
 
 
@@ -119,6 +121,8 @@ BOOL CnumericalCalculaterDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
 	// TODO: 在此添加额外的初始化代码
+	   src = imread(  "D:\\images/3.jpg"    );
+	//DrawPicToHDC(src,   IDC_STATIC1  );
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
@@ -158,9 +162,12 @@ void CnumericalCalculaterDlg::OnPaint()
 
 		// 绘制图标
 		dc.DrawIcon(x, y, m_hIcon);
+		//DrawPicToHDC(src, IDC_STATIC1);
 	}
 	else
 	{
+		//DrawPicToHDC(src, IDC_STATIC1);
+
 		CDialogEx::OnPaint();
 	}
 }
@@ -2056,7 +2063,7 @@ void CnumericalCalculaterDlg::OnBnClickedButton14_dlibBayes()
 	// TODO: 在此添加控件通知处理程序代码
 	AllocConsole();
 	freopen("CONOUT$", "w", stdout);
-
+	DrawPicToHDC(src, IDC_STATIC1); 
 	main_example_dlib_bayes();
 	FreeConsole();
 }
@@ -3376,5 +3383,134 @@ void CnumericalCalculaterDlg::OnBnClickedButton20_dlibKMeanCluster()
 
 
 
+using namespace  cv;
+
+void trans_src_2_dst(Mat src, Mat &  dst)
+{
+	//  resize
+	if (1)
+	{
+		resize(src, dst, Size(dst.cols, dst.rows));
+		return;
+	}
+
+	// not resize 
+	if (!src.data)
+		return;
+	int  r_src = src.rows;
+	int  c_src = src.cols;
+
+	int  r_dst = dst.rows;
+	int  c_dst = dst.cols;
+
+	//LOG4CPLUS_DEBUG(test1_01,
+	//	"src, dst , r_src= " << r_src << ",c_src=" << c_src << ",r_dst=" << r_dst << ",c_dst=" << c_dst);
+
+	if (r_src <= 0 || c_src <= 0)
+		return;
+	double rate_r = (float)r_dst / (float)r_src;
+	double rate_c = (float)c_dst / (float)c_src;
+
+	float rate = min(rate_r, rate_c);
+	//LOG4CPLUS_DEBUG(test1_01,
+	//	"src, dst , rate_r= " << rate_r << ",rate_c=" << rate_c << ",rate=" << rate);
 
 
+
+	int r_act = (int)(rate* r_src);
+	int c_act = (int)(rate* c_src);
+	//LOG4CPLUS_DEBUG(test1_01,
+	//	" r_act= " << r_act << ",c_act=" << c_act);
+
+	if (0)
+	{
+		char  car[900];
+		sprintf(car, "r_src, c_src, r_dst, c_dst, r_act , c_act = %d,  %d, %d,  %d, %d,  %d  ", r_src, c_src, r_dst, c_dst, r_act, c_act);
+		//LOG_DEBUG(car);
+	}
+
+
+
+	Mat tmp;
+	resize(src, tmp, Size(c_act, r_act));
+	//tmp.copyTo(src);
+
+	int x_rt = (int)(c_dst / 2 - c_act / 2);
+	int y_rt = (int)(r_dst / 2 - r_act / 2);
+
+	//LOG4CPLUS_DEBUG(test1_01, "trans_src_2_dst,Rect rt, x_rt= " << x_rt << ",y_rt=" << y_rt << ",c_act=" << c_act << ",r_act=" << r_act);
+	Rect rt = Rect(x_rt, y_rt, c_act, r_act);
+	dst.setTo(0);
+	tmp.copyTo(dst(rt));
+
+	//LOG4CPLUS_DEBUG(test1_01, "拷贝成功： tmp.copyTo(dst(rt))。   ");
+}
+
+
+
+void CnumericalCalculaterDlg::DrawPicToHDC(IplImage *img, UINT ID)
+{
+	if (img == NULL)
+		return;
+
+	CDC *pDC = GetDlgItem(ID)->GetDC();
+
+	HDC hDC = pDC->GetSafeHdc();
+	CRect rect;
+	GetDlgItem(ID)->GetClientRect(&rect);
+
+	CvvImage cimg;
+	cimg.CopyOf(img);				// 复制图片
+	cimg.DrawToHDC(hDC, &rect);	// 将图片绘制到显示控件的指定区域内
+	if (pDC != nullptr)
+		ReleaseDC(pDC);
+}
+
+
+void CnumericalCalculaterDlg::DrawPicToHDC(Mat   src, UINT ID)
+{
+	if (!src.data)
+		return;
+	IplImage * img;
+	img = &IplImage(src);
+	DrawPicToHDC(img, ID);
+}
+
+void CnumericalCalculaterDlg::OnBnClickedButton21_tr01()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	AllocConsole();
+	freopen("CONOUT$", "w", stdout);
+
+
+	CalcTR1    c1;
+	Mat inutImage = imread( "D:\\images/book.jpg",   1   );
+	Point2f   ptf4[4];
+	int  res = c1.calcPtf4(inutImage, ptf4);
+	cout << "res = " << res <<  endl;
+
+
+
+
+
+	cout << "finish  c1.calcTR()  " << endl;
+
+
+
+	FreeConsole();
+}
+
+
+void CnumericalCalculaterDlg::OnBnClickedButton22_tr02()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	AllocConsole();
+	freopen("CONOUT$", "w", stdout);
+
+
+	CalcTR2    c2;
+
+
+
+	FreeConsole();
+}

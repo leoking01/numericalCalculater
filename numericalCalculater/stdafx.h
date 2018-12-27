@@ -43,9 +43,10 @@
 
 #include<stdio.h> 
 #include<conio.h>
+#include<stdio.h> 
+#include<conio.h>
 
-#include <iostream>
-#include <cmath>
+
 //using namespace std;
 
 #include <Eigen/Core>
@@ -55,33 +56,20 @@
 
 
 
-#include<stdio.h> 
-#include<conio.h>
+
 
 #include <iostream>
 #include <cmath>
-//using namespace std;
-
-#include <Eigen/Core>
-// Eigen ¼¸ºÎÄ£¿é
-#include <Eigen/Geometry>
-
-
-#include<iostream>
 #include<fstream>
-
-#include <iostream>
-#include <opencv2/opencv.hpp>
-
-
-
 #include <cstdio>  
 #include <vector>  
+
+
+
+
+
+#include <opencv2/opencv.hpp>
 #include <opencv2/core/core.hpp>  
-
-#include "LKOpticalFlowApplication.h"
-
-
 
 
 
@@ -90,6 +78,11 @@
 #include <dlib/graph_utils.h>
 #include <dlib/graph.h>
 #include <dlib/directed_graph.h>
-#include <iostream>
 
 
+
+#include "LKOpticalFlowApplication.h"
+#include "calcTR2.h"
+#include "calcTR1.h"
+
+//#include  "mask_rcnn.h"

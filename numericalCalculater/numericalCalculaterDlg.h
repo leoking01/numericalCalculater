@@ -3,7 +3,12 @@
 //
 
 #pragma once
+#include  <opencv2/opencv.hpp>
+#include  <opencv/cv.h>
+#include  "CvvImage.h"
 
+#include "calcTR2.h"
+#include "calcTR1.h"
 
 // CnumericalCalculaterDlg ¶Ô»°¿ò
 class CnumericalCalculaterDlg : public CDialogEx
@@ -52,4 +57,12 @@ public:
 	afx_msg void OnBnClickedButton18_dlibAssignment();
 	afx_msg void OnBnClickedButton19_dlibMultiClassify();
 	afx_msg void OnBnClickedButton20_dlibKMeanCluster();
+
+
+
+	void DrawPicToHDC(IplImage *img, UINT ID);
+	void DrawPicToHDC(Mat  src   , UINT ID);
+	Mat  src;
+	afx_msg void OnBnClickedButton21_tr01();
+	afx_msg void OnBnClickedButton22_tr02();
 };

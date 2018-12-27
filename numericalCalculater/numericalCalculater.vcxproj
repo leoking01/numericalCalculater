@@ -120,7 +120,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalDependencies>avcodec.lib;avdevice.lib;avfilter.lib;avformat.lib;avutil.lib;postproc.lib;swscale.lib;opencv_calib3d2413d.lib;opencv_core2413d.lib;opencv_imgproc2413d.lib;opencv_highgui2413d.lib;opencv_contrib2413d.lib;opencv_features2d2413d.lib;opencv_flann2413d.lib;opencv_gpu2413d.lib;opencv_legacy2413d.lib;opencv_ml2413d.lib;opencv_nonfree2413d.lib;opencv_objdetect2413d.lib;opencv_ocl2413d.lib;opencv_photo2413d.lib;opencv_stitching2413d.lib;opencv_superres2413d.lib;opencv_ts2413d.lib;opencv_video2413d.lib;opencv_videostab2413d.lib;dlibd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>avcodec.lib;avdevice.lib;avfilter.lib;avformat.lib;avutil.lib;postproc.lib;swscale.lib;dlibd.lib;opencv_calib3d2413d.lib;opencv_core2413d.lib;opencv_imgproc2413d.lib;opencv_highgui2413d.lib;opencv_contrib2413d.lib;opencv_features2d2413d.lib;opencv_flann2413d.lib;opencv_gpu2413d.lib;opencv_legacy2413d.lib;opencv_ml2413d.lib;opencv_nonfree2413d.lib;opencv_objdetect2413d.lib;opencv_ocl2413d.lib;opencv_photo2413d.lib;opencv_stitching2413d.lib;opencv_superres2413d.lib;opencv_ts2413d.lib;opencv_video2413d.lib;opencv_videostab2413d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -189,7 +189,11 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CalcRelation.h" />
+    <ClInclude Include="CalcTR1.h" />
+    <ClInclude Include="CalcTR2.h" />
     <ClInclude Include="CommonTools.h" />
+    <ClInclude Include="CvvImage.h" />
     <ClInclude Include="LKOpticalFlowApplication.h" />
     <ClInclude Include="numericalCalculater.h" />
     <ClInclude Include="numericalCalculaterDlg.h" />
@@ -199,7 +203,11 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CalcRelation.cpp" />
+    <ClCompile Include="CalcTR1.cpp" />
+    <ClCompile Include="CalcTR2.cpp" />
     <ClCompile Include="CommonTools.cpp" />
+    <ClCompile Include="CvvImage.cpp" />
     <ClCompile Include="LKOpticalFlowApplication.cpp" />
     <ClCompile Include="numericalCalculater.cpp" />
     <ClCompile Include="numericalCalculaterDlg.cpp" />
