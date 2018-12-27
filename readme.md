@@ -14,7 +14,7 @@
 - 7 cnn 
 
 ui
-<img src="uiShot.png" size="40%" />
+<img src="uiShot.PNG" size="40%" />
 
 
 
